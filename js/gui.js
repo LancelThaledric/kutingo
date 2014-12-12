@@ -5,6 +5,14 @@
 
 $(document).ready(
 function(){
+    
+    // KUTINGO Motherfucker !!
+    var app = new Kutingo();
+    
+    // Header
+    var header = $('.main-header');
+    
+    
     // Overlap
     
     var mainWrapper = $('.main-wrapper');
@@ -14,6 +22,7 @@ function(){
     var outspread_duration = 500;
     var outspread_timeout;
     var animationDone_class = 'slideDown-done'
+    var hasmenus_class = 'hasmenus';
     
     var o = false;
     
@@ -44,11 +53,24 @@ function(){
         );
     }
     
-    $(document).click(
-    function(){
-        o = !o;
-        if(o) showOverlap();
-        else hideOverlap();
+    // Events Overlap
+    
+    
+    $(window).on('mousewheel',
+    function(event){
+        
+        if(app.focus) return false;
+        
+        if(event.deltaY < 0)
+        {
+            // Scroll Down
+            showOverlap();
+        }
+        else if(undergame.scrollTop() <= 0)
+        {
+            hideOverlap();
+        }
+        
     }
     );
     

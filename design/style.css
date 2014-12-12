@@ -26,13 +26,16 @@ body{
 .main-header{
     display: table;
     position: fixed;
-    top: 0;
+    top: -64px;
     z-index : 200;
     
     width : 100%;
     height: 64px;
     
     background: rgba(255,0,0,0.5);
+}
+.main-wrapper.hasmenus .main-header{
+    top : 0;
 }
 
 .main-header h1{
@@ -92,7 +95,7 @@ body{
 
 .scroll-indicator{
     position: absolute;
-    bottom : 0vh;
+    bottom : -64px;
     z-index : 150;
     width: 100%;
     height: 64px;
@@ -106,12 +109,15 @@ body{
          -o-transition: margin 0.5s ease, bottom 0.5s ease;
             transition: margin 0.5s ease, bottom 0.5s ease;
 }
+.scroll-indicator.slideDown-done{
+    visibility: hidden;
+}
+.main-wrapper.hasmenus .scroll-indicator{
+    bottom : 0px;
+}
 .main-wrapper.outspread .scroll-indicator{
     margin-bottom : -64px;
     bottom : 100vh;
-}
-.scroll-indicator.slideDown-done{
-    visibility: hidden;
 }
 
 /*--------------------------------
@@ -168,4 +174,13 @@ body{
     
     /* default values */
     visibility: visible;
+}
+
+/*--------------------------------
+        KUTINGO
+--------------------------------*/
+
+#kutingo{
+    width : 100%;
+    height: 100%;
 }

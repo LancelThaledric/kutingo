@@ -9,6 +9,7 @@ function(){
     
     var mainWrapper = $('.main-wrapper');
     var undergame = $('.undergame');
+    var scrollIndicator = $('.scroll-indicator');
     var outspread_class = 'outspread';
     var outspread_duration = 500;
     var outspread_timeout;
@@ -18,6 +19,8 @@ function(){
     
     
     function hideOverlap(){
+        scrollIndicator.removeClass(animationDone_class);
+        clearTimeout(outspread_timeout);
         outspread_timeout = setTimeout(
             function(){
                 undergame.addClass(animationDone_class);
@@ -33,6 +36,12 @@ function(){
         undergame.removeClass(animationDone_class);
         mainWrapper.addClass(outspread_class);
         clearTimeout(outspread_timeout);
+        outspread_timeout = setTimeout(
+            function(){
+                scrollIndicator.addClass(animationDone_class);
+            }
+            , outspread_duration
+        );
     }
     
     $(document).click(

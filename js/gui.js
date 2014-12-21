@@ -24,7 +24,7 @@ function(){
     var animationDone_class = 'slideDown-done'
     var hasmenus_class = 'hasmenus';
     
-    var o = false;
+    var o = true;
     
     
     function hideOverlap(){
@@ -71,6 +71,15 @@ function(){
             hideOverlap();
         }
         
+    }
+    );
+    
+    $('.game').click(
+    function(){
+        app.focus = !app.focus;
+        o = !o;
+        if(o) mainWrapper.addClass(hasmenus_class);
+        else mainWrapper.removeClass(hasmenus_class);
     }
     );
     

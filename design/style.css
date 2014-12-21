@@ -33,6 +33,13 @@ body{
     height: 64px;
     
     background: rgba(255,0,0,0.5);
+    
+    /* Transistions */
+    -webkit-transition: top 0.5s ease;
+       -moz-transition: top 0.5s ease;
+        -ms-transition: top 0.5s ease;
+         -o-transition: top 0.5s ease;
+            transition: top 0.5s ease;
 }
 .main-wrapper.hasmenus .main-header{
     top : 0;

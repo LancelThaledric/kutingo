@@ -83,5 +83,10 @@ function(){
     }
     );
     
+    $(window).resize(
+    function(){
+        app.onResize();
+    });
+    
 }
 );

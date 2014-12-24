@@ -1,16 +1,24 @@
 /**********************
-        TitleState
+        PlayState
         
-        Title Screen, choose level
+        In-Game managment
 ***********************************/
 
-function TitleState(app){
+<?php
+
+require_once('KLine.php');
+
+?>
+
+function PlayState(app){
     var self = this;
-    
     
     // Members Vars ///////////////////////////////////////////////////////////////
 
     self.app;
+    
+    
+    self.line;
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
@@ -18,9 +26,11 @@ function TitleState(app){
         
         self.app = app;
         
+        self.line = new KLine();
+        
         // Cube time !      // TEMPORARY
-        self.geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        self.material = new THREE.MeshBasicMaterial( { color: 0x882255 } );
+        self.geometry = new THREE.BoxGeometry( 10, 10, 10 );
+        self.material = new THREE.MeshBasicMaterial( { color: 0x0055ff } );
         self.cube = new THREE.Mesh( self.geometry, self.material );
         self.app.scene.add( self.cube );
     }

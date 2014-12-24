@@ -1,40 +1,49 @@
 /**********************
-        GameState
+        KLine
         
-        By-State Architecture of the game
+        Line that is controlled by the player
 ***********************************/
 
-function GameState(app){
+function KLine(){
     var self = this;
     
     // Members Vars ///////////////////////////////////////////////////////////////
+
     
-    self.app;
+    // Logic
+    self.size;
+    self.orientation;
+    self.speed;
+    self.color;
+    
+    // Display
+    self.disp_line;
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
     self.init = function(){
-        self.app = app;
-        
+        self.size = 5;
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
     
     self.handleEvents = function()
     {
-        console.log("Handeling events of " + self);
+        
     }
     
     self.update = function()
     {
-        console.log("Updating " + self);
+        // TEMPORARY
+        self.cube.rotation.x += 0.1;
+        self.cube.rotation.y += 0.1;
     }
     
     self.draw = function()
     {
-        console.log("Drawing " + self);
+        
     }
     
-    // LAUCHE OBJECT HELL YEAH !    /////////////////////////////////////////////
+    // YEAH MAN !!! //////////////////////////////////////////////////////////////
     self.init();
 }

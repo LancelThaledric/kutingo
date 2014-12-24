@@ -12,8 +12,8 @@ header('Content-Type: text/javascript');
 <?php
 
 require_once('EventHandler.php');
-require_once('GameState.php');
 require_once('TitleState.php');
+require_once('PlayState.php');
 
 ?>
 
@@ -34,7 +34,6 @@ function Kutingo(){
     
     self.canvas;
     
-    self.stateGeneric;
     self.eventHandler;
     
     self.states;
@@ -51,14 +50,14 @@ function Kutingo(){
         // Scene vars
         self.scene = new THREE.Scene();
         self.camera = new THREE.OrthographicCamera(
-            -self.aspectRatio,      // Left
-            self.aspectRatio,       // Right
-            1,                      // Top
-            -1,                     // Bottom
+            -self.aspectRatio*100,      // Left
+            self.aspectRatio*100,       // Right
+            100,                      // Top
+            -100,                     // Bottom
             1,                      // znear
             1000                    // zfar
         );
-        self.camera.position.z = 5;
+        self.camera.position.z = 100;
         
         // Renderer 
         if (window.WebGLRenderingContext)
@@ -75,12 +74,11 @@ function Kutingo(){
         self.onResize();
         
         // States
-        self.stateGeneric = new GameState(self);
         self.eventHandler = new EventHandler(self);
         self.states = [];
         
         // Stating Game on the Title Screen
-        self.states.push(new TitleState(self.stateGeneric));
+        self.states.push(new PlayState(self));
         
         // Launch Render Loop
         self.render();

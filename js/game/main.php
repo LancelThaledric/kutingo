@@ -38,6 +38,9 @@ function Kutingo(){
     
     self.states;
     
+    self.clock;
+    self.deltaTime;
+    
     // CONSTRUCTOR  ///////////////////////////////////////////////////////////////
     
     self.init = function()
@@ -66,7 +69,7 @@ function Kutingo(){
             self.renderer = new THREE.CanvasRenderer();
         
         self.renderer.setClearColor(self.clearColor);
-        
+        self.renderer.antialias = true;
         // Canvas
         self.canvas = this.renderer.domElement;
         self.canvas.setAttribute("id", "glrenderer");
@@ -79,6 +82,9 @@ function Kutingo(){
         
         // Stating Game on the Title Screen
         self.states.push(new PlayState(self));
+        
+        // Clock Launch
+        self.clock = new THREE.Clock(true);
         
         // Launch Render Loop
         self.render();
@@ -153,6 +159,7 @@ function Kutingo(){
     */
     self.render = function()
     {
+        self.deltaTime = self.clock.getDelta();
         self.handleEvents();
         self.update();
         requestAnimationFrame( self.render );

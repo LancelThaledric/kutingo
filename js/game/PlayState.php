@@ -26,32 +26,24 @@ function PlayState(app){
         
         self.app = app;
         
-        self.line = new KLine();
-        
-        // Cube time !      // TEMPORARY
-        self.geometry = new THREE.BoxGeometry( 10, 10, 10 );
-        self.material = new THREE.MeshBasicMaterial( { color: 0x0055ff } );
-        self.cube = new THREE.Mesh( self.geometry, self.material );
-        self.app.scene.add( self.cube );
+        self.line = new KLine(self.app);
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
     
     self.handleEvents = function()
-    {
-        
+    {        
+        self.line.handleEvents();
     }
     
     self.update = function()
     {
-        // TEMPORARY
-        self.cube.rotation.x += 0.1;
-        self.cube.rotation.y += 0.1;
+        self.line.update();
     }
     
     self.draw = function()
     {
-        
+        self.line.draw();
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

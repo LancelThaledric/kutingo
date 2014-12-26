@@ -7,6 +7,7 @@
 <?php
 
 require_once('KLine.php');
+require_once('KBullets.php');
 
 ?>
 
@@ -19,6 +20,7 @@ function PlayState(app){
     
     
     self.line;
+    self.bullets;
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
@@ -27,6 +29,8 @@ function PlayState(app){
         self.app = app;
         
         self.line = new KLine(self.app);
+        
+        self.bullets = new KBullets(self.app);
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
@@ -39,6 +43,7 @@ function PlayState(app){
     self.update = function()
     {
         self.line.update();
+        self.bullets.update();
     }
     
     self.draw = function()

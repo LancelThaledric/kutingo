@@ -67,7 +67,6 @@ function Kutingo(){
             self.renderer = new THREE.WebGLRenderer();
         else
             self.renderer = new THREE.CanvasRenderer();
-        
         self.renderer.setClearColor(self.clearColor);
         self.renderer.antialias = true;
         // Canvas

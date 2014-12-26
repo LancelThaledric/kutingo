@@ -28,7 +28,7 @@ function KLine(app){
         
         self.size = 20;
         self.orientation = 0;
-        self.speed = 3.2;
+        self.speed = 5.2;
         self.color = 0xFFFFFF;
         self.thickness = 4;
         

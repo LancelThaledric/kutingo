@@ -44,6 +44,35 @@ function PlayState(app){
     {
         self.line.update();
         self.bullets.update();
+        self.checkBarCollisions();
+        
+        // Reflection of bullets on the bar
+        
+    }
+    
+    self.checkBarCollisions = function(){
+        // Step 0 : Compute each bullet
+        for(var i=0, is3 = 0 ; i<self.bullets.positions.length ; i+= 3, is3++)
+        {
+            // Step 1 : Check the distance between the bullet and the center
+            if (self.bullets.positions[i] * self.bullets.positions[i]
+               + self.bullets.positions[i+1] * self.bullets.positions[i+1]
+               > self.line.size * self.line.size)
+            {
+                // No Collision
+                continue;
+            }
+            
+            //Step 2 : Check if the bullet has crossed the line
+            if()
+            {
+                continue;
+            }
+            
+            // Final : We change the direction of the bullet
+            self.bullets.speeds[is3] = -1;
+            
+        }
     }
     
     self.draw = function()

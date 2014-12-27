@@ -15,6 +15,7 @@ function KBullets(app){
     // Logic
     
     self.positions;
+    self.positionstm1;
     self.directions;
     self.speeds;
     
@@ -27,10 +28,11 @@ function KBullets(app){
     self.init = function(){
         self.app = app;
         
-        var nb = 40;
+        var nb = 10;
         
         var geombuf = new THREE.BufferGeometry();
         self.positions = new Float32Array(nb*3);
+        self.positionstm1 = new Float32Array(nb*3);     // pos at t-1
         self.directions = [];
         self.speeds = [];
         
@@ -76,8 +78,12 @@ function KBullets(app){
     {
         for ( var i = 0, is3 = 0 ; i < self.positions.length; i += 3, is3++ )
         {
+            self.positionstm1[i] = self.positions[i];
+            self.positionstm1[i+1] = self.positions[i+1];
+            
             self.positions[i] -= Math.cos(self.directions[is3]) * self.speeds[is3];
             self.positions[i+1] += Math.sin(self.directions[is3]) * self.speeds[is3];
+            
         }
         self.particles.geometry.addAttribute( 'position', new THREE.BufferAttribute( self.positions, 3 ) );
     }

@@ -14,6 +14,7 @@ function KLine(app){
     // Logic
     self.size;          // Lenght of the line
     self.orientation;   // Rotaztion in radians. 0 is horizontal.
+    self.orientationtm1;    // Rotation at t-1.
     self.speed;         // Speed of rotation in radian per second
     self.color;         // Color of the line
     self.thickness;     // Thickness of the line;
@@ -65,6 +66,7 @@ function KLine(app){
     
     self.update = function()
     {
+        self.orientationtm1 = self.orientation;
         // Nothing ?
     }
     

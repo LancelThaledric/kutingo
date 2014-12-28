@@ -21,6 +21,9 @@ function PlayState(app){
     
     self.line;
     self.bullets;
+    self.scalarstm2;
+    self.scalarstm1;
+    self.scalarst;
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
@@ -31,6 +34,10 @@ function PlayState(app){
         self.line = new KLine(self.app);
         
         self.bullets = new KBullets(self.app);
+        
+        self.scalarstm2 = new Array(self.bullets.directions.lenght);
+        self.scalarstm1 = new Array(self.bullets.directions.lenght);
+        self.scalarst = new Array(self.bullets.directions.lenght);
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
@@ -63,7 +70,27 @@ function PlayState(app){
             if(self.bullets.hasBounced[is3])
                 continue;
             
-            // Step 2 : Check the distance between the bullet and the center
+            //Step 2 : Check if the bullet has crossed the line            
+            
+            bulletVector = [self.bullets.positions[i],
+                            self.bullets.positions[i+1]];
+            bulletVectortm1 = [self.bullets.positionstm1[i],
+                               self.bullets.positionstm1[i+1]];
+            var st = lineVector[0] * bulletVector[0]
+                   + lineVector[1] * bulletVector[1];
+            
+            self.scalarstm2[is3] = self.scalarstm1[is3];
+            self.scalarstm1[is3] = self.scalarst[is3];
+            self.scalarst[is3] = st;
+            
+            if(st*self.scalarstm2[is3] > 0 ) //st and stm1 does have the same sings.
+            {
+                continue;
+            }
+            
+            
+                        
+            // Step 3 : Check the distance between the bullet and the center
             if (self.bullets.positions[i] * self.bullets.positions[i]
                + self.bullets.positions[i+1] * self.bullets.positions[i+1]
                > self.line.size * self.line.size)
@@ -72,26 +99,12 @@ function PlayState(app){
                 continue;
             }
             
-            //Step 3 : Check if the bullet has crossed the line
             
-            bulletVector = [self.bullets.positions[i],
-                            self.bullets.positions[i+1]];
-            bulletVectortm1 = [self.bullets.positionstm1[i],
-                               self.bullets.positionstm1[i+1]];
-            var st = lineVector[0] * bulletVector[0]
-                   + lineVector[1] * bulletVector[1]
-              , stm1 = lineVectortm1[0] * bulletVectortm1[0]
-                     + lineVectortm1[1] * bulletVectortm1[1];
-            
-            if(st*stm1 > 0) //st and stm1 does have the same sings.
-            {
-                continue;
-            }
             
             // Else : There is a cross of the line !
             console.log("REBOND !");
             // Final : We change the direction of the bullet
-            self.bullets.speeds[is3] = -1;
+            self.bullets.speeds[is3] = -10;
             self.bullets.hasBounced[is3] = true;
             
         }

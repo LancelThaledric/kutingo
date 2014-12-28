@@ -63,6 +63,11 @@ function PlayState(app){
         var lineVectortm1 = [Math.cos(self.line.orientationtm1),
                           Math.sin(self.line.orientationtm1)];
         var bulletVector, bulletVectortm1;
+        var newposBullet,
+            x1line = Math.cos(self.line.orientation + Math.PI/2),
+            y1line = Math.sin(self.line.orientation + Math.PI/2),
+            x2line = Math.cos(self.line.orientation - Math.PI/2),
+            y2line = Math.sin(self.line.orientation - Math.PI/2);
         // Step 0 : Compute each bullet
         for(var i=0, is3 = 0 ; i<self.bullets.positions.length ; i+= 3, is3++)
         {
@@ -103,8 +108,15 @@ function PlayState(app){
             
             // Else : There is a cross of the line !
             console.log("REBOND !");
+            
+            // Step 4 : Collision ! We compute the direction of the bullet
+            self.bullets.directions[is3] =
+                -(-self.bullets.directions[is3] + 2*(self.line.orientation - Math.PI/2) - Math.PI / 2) + Math.PI/2;
+            // C'est MEGA MOCHE, mais ça marche ! :D
+            
+            
             // Final : We change the direction of the bullet
-            self.bullets.speeds[is3] = -10;
+            self.bullets.speeds[is3] = 4;
             self.bullets.hasBounced[is3] = true;
             
         }

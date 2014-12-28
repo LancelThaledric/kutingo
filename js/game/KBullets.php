@@ -45,11 +45,11 @@ function KBullets(app){
         {
             
             //rad = Math.random()*Math.PI*2;
-            rad = 0;
+            rad = Math.PI / 2;
             off = Math.random()*40-20;
             //off = 0;
-            self.positions[i] = Math.cos(rad) * 70 * self.app.aspectRatio * Math.SQRT2;
-            self.positions[i+1] = Math.sin(rad) * 70 * self.app.aspectRatio * Math.SQRT2;
+            self.positions[i] = Math.cos(rad) * 20 * self.app.aspectRatio * Math.SQRT2;
+            self.positions[i+1] = Math.sin(rad) * 20 * self.app.aspectRatio * Math.SQRT2;
             self.positions[i+2] = 0;
             
             self.directions[is3] = -rad;

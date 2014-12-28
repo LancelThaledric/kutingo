@@ -28,7 +28,7 @@ function KLine(app){
         self.app = app;
         
         self.size = 20;
-        self.orientation = 0;
+        self.orientation = Math.PI / 2;
         self.speed = 5.2;
         self.color = 0xFFFFFF;
         self.thickness = 4;
@@ -36,8 +36,8 @@ function KLine(app){
         // Displine
         var geometry = new THREE.Geometry();
         geometry.vertices.push(
-            new THREE.Vector3(-1, 0, 0),
-            new THREE.Vector3(1, 0, 0)
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(0, -1, 0)
         );
         var material = new THREE.LineBasicMaterial({
             color: self.color,

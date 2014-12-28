@@ -51,10 +51,19 @@ function PlayState(app){
     }
     
     self.checkBarCollisions = function(){
+        var lineVector = [Math.cos(self.line.orientation),
+                          Math.sin(self.line.orientation)];
+        var lineVectortm1 = [Math.cos(self.line.orientationtm1),
+                          Math.sin(self.line.orientationtm1)];
+        var bulletVector, bulletVectortm1;
         // Step 0 : Compute each bullet
         for(var i=0, is3 = 0 ; i<self.bullets.positions.length ; i+= 3, is3++)
         {
-            // Step 1 : Check the distance between the bullet and the center
+            // Step 1 : If the ball has already bounced, we don't compute it.
+            if(self.bullets.hasBounced[is3])
+                continue;
+            
+            // Step 2 : Check the distance between the bullet and the center
             if (self.bullets.positions[i] * self.bullets.positions[i]
                + self.bullets.positions[i+1] * self.bullets.positions[i+1]
                > self.line.size * self.line.size)
@@ -63,14 +72,27 @@ function PlayState(app){
                 continue;
             }
             
-            //Step 2 : Check if the bullet has crossed the line
-            if()
+            //Step 3 : Check if the bullet has crossed the line
+            
+            bulletVector = [self.bullets.positions[i],
+                            self.bullets.positions[i+1]];
+            bulletVectortm1 = [self.bullets.positionstm1[i],
+                               self.bullets.positionstm1[i+1]];
+            var st = lineVector[0] * bulletVector[0]
+                   + lineVector[1] * bulletVector[1]
+              , stm1 = lineVectortm1[0] * bulletVectortm1[0]
+                     + lineVectortm1[1] * bulletVectortm1[1];
+            
+            if(st*stm1 > 0) //st and stm1 does have the same sings.
             {
                 continue;
             }
             
+            // Else : There is a cross of the line !
+            console.log("REBOND !");
             // Final : We change the direction of the bullet
             self.bullets.speeds[is3] = -1;
+            self.bullets.hasBounced[is3] = true;
             
         }
     }

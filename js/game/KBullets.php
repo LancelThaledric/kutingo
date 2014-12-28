@@ -18,6 +18,7 @@ function KBullets(app){
     self.positionstm1;
     self.directions;
     self.speeds;
+    self.hasBounced;
     
     // Display
     
@@ -35,6 +36,7 @@ function KBullets(app){
         self.positionstm1 = new Float32Array(nb*3);     // pos at t-1
         self.directions = [];
         self.speeds = [];
+        self.hasBounced = [];
         
         var rad;
         var off;
@@ -42,16 +44,17 @@ function KBullets(app){
         for ( var i = 0, is3 = 0 ; i < self.positions.length; i += 3, is3++ )
         {
             
-            rad = Math.random()*Math.PI*2;
-            //rad = Math.PI / 3;
+            //rad = Math.random()*Math.PI*2;
+            rad = 0;
             off = Math.random()*40-20;
             //off = 0;
-            self.positions[i] = Math.cos(rad) * 100 * self.app.aspectRatio * Math.SQRT2;
-            self.positions[i+1] = Math.sin(rad) * 100 * self.app.aspectRatio * Math.SQRT2;
+            self.positions[i] = Math.cos(rad) * 70 * self.app.aspectRatio * Math.SQRT2;
+            self.positions[i+1] = Math.sin(rad) * 70 * self.app.aspectRatio * Math.SQRT2;
             self.positions[i+2] = 0;
             
             self.directions[is3] = -rad;
             self.speeds[is3] = 1;
+            self.hasBounced[is3] = false;
             self.positions[i] += off * Math.cos(rad + Math.PI/2);
             self.positions[i+1] += off * Math.sin(rad + Math.PI/2);
         }

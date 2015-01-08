@@ -4,7 +4,7 @@
 */
 
 $(document).ready(
-function(){
+function() {
     
     // KUTINGO Motherfucker !!
     var app = new Kutingo();

@@ -8,6 +8,7 @@
 
 require_once('KLine.php');
 require_once('KBullets.php');
+require_once('KTargets.php');
 
 ?>
 
@@ -18,12 +19,14 @@ function PlayState(app){
 
     self.app;
     
-    
     self.line;
+    
     self.bullets;
     self.scalarstm2;
     self.scalarstm1;
     self.scalarst;
+    
+    self.targets;
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
@@ -34,10 +37,16 @@ function PlayState(app){
         self.line = new KLine(self.app);
         
         self.bullets = new KBullets(self.app);
-        
         self.scalarstm2 = new Array(self.bullets.directions.lenght);
         self.scalarstm1 = new Array(self.bullets.directions.lenght);
         self.scalarst = new Array(self.bullets.directions.lenght);
+        
+        var nb_targets = 5;
+        self.targets = new Array(nb_targets);
+        for(var i = 0; i < self.targets.length; i++)
+        {
+            self.targets[i] = new KTarget(self.app);
+        }
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
@@ -45,19 +54,39 @@ function PlayState(app){
     self.handleEvents = function()
     {        
         self.line.handleEvents();
+        self.bullets.handleEvents();
+        for(var i = 0; i < self.targets.length; i++)
+        {
+            self.targets[i].handleEvents();
+        }
     }
     
     self.update = function()
     {
         self.line.update();
         self.bullets.update();
+        for(var i = 0; i < self.targets.length; i++)
+        {
+            self.targets[i].update();
+        }
+        
         self.checkBarCollisions();
-        
+        self.checkTargetsCollisions();
         // Reflection of bullets on the bar
-        
     }
     
-    self.checkBarCollisions = function(){
+    self.draw = function()
+    {
+        self.line.draw();
+        self.bullets.draw();
+        for(var i = 0; i < self.targets.length; i++)
+        {
+            self.targets[i].draw();
+        }
+    }
+    
+    self.checkBarCollisions = function()
+    {
         var lineVector = [Math.cos(self.line.orientation),
                           Math.sin(self.line.orientation)];
         var lineVectortm1 = [Math.cos(self.line.orientationtm1),
@@ -110,9 +139,16 @@ function PlayState(app){
             console.log("REBOND !");
             
             // Step 4 : Collision ! We compute the direction of the bullet
+            /*
             self.bullets.directions[is3] =
-                -(-self.bullets.directions[is3] + 2*(self.line.orientation - Math.PI/2) - Math.PI / 2) + Math.PI/2;
+                -(-self.bullets.directions[is3] + 2*(self.line.orientation + Math.PI/2) - Math.PI / 2) + Math.PI/2;
             // C'est MEGA MOCHE, mais ça marche ! :D
+            */
+            
+            var alpha = - self.line.orientation 
+                - self.bullets.directions[is3] + Math.PI/2;
+            self.bullets.directions[is3] = 2 * alpha 
+                + self.bullets.directions[is3];
             
             
             // Final : We change the direction of the bullet
@@ -122,9 +158,23 @@ function PlayState(app){
         }
     }
     
-    self.draw = function()
+    
+    self.checkTargetsCollisions = function()
     {
-        self.line.draw();
+	/*
+       for(var i = 0; i < self.targets.length; i++)
+        {
+            for(var j = 0; j < self.bullets.positions.length; j++)
+            {
+                if(self.targets[i].geometry.boundingBox.containsPoint(
+                    self.bullets.positions[j]))
+                {
+                    // The target has been hit by a bullet.
+                    console.log("Target " + i + " hit !");
+                }
+            }
+        }
+	*/
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

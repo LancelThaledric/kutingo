@@ -29,7 +29,7 @@ function KBullets(app){
     self.init = function(){
         self.app = app;
         
-        var nb = 10;
+        var nb = 50;
         
         var geombuf = new THREE.BufferGeometry();
         self.positions = new Float32Array(nb*3);
@@ -44,12 +44,13 @@ function KBullets(app){
         for ( var i = 0, is3 = 0 ; i < self.positions.length; i += 3, is3++ )
         {
             
-            //rad = Math.random()*Math.PI*2;
-            rad = Math.PI / 2;
+            rad = Math.random()*Math.PI*2;
+            //rad = Math.PI / 2;
             off = Math.random()*40-20;
             //off = 0;
-            self.positions[i] = Math.cos(rad) * 20 * self.app.aspectRatio * Math.SQRT2;
-            self.positions[i+1] = Math.sin(rad) * 20 * self.app.aspectRatio * Math.SQRT2;
+            dist = 70;
+            self.positions[i] = Math.cos(rad) * dist * self.app.aspectRatio * Math.SQRT2;
+            self.positions[i+1] = Math.sin(rad) * dist * self.app.aspectRatio * Math.SQRT2;
             self.positions[i+2] = 0;
             
             self.directions[is3] = -rad;

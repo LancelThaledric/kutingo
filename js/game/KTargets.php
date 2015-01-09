@@ -36,7 +36,7 @@ function KTarget(app, parentstate){
         //var rad = Math.PI / 2;
         var rad = Math.random() * Math.PI*2;
         var off = Math.random() * 40-20;
-        var dist = 20;
+        var dist = 70;
         
         var x, y, z;
         x = Math.cos(rad) * dist * self.app.aspectRatio * Math.SQRT2 

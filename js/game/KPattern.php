@@ -30,17 +30,17 @@ function KPattern(app, parentstate){
         
         self.data = new Array(self.duration * patternDivider);
         
-        self.data[0] = [];
+        self.data[0] = new KPatternElement();
         
-        self.data[0].push( new KBulletSpawner(self.app, self.parentstate,
+        self.data[0].bullets.push( new KBulletSpawner(self.app, self.parentstate,
                                               0, 0, 1));
-        self.data[0].push( new KBulletSpawner(self.app, self.parentstate,
+        self.data[0].bullets.push( new KBulletSpawner(self.app, self.parentstate,
                                               Math.PI, 0, 1));
         
-        self.data[2*patternDivider] = [];
-        self.data[2*patternDivider].push( new KBulletSpawner(self.app, self.parentstate,
+        self.data[2*patternDivider] = new KPatternElement();
+        self.data[2*patternDivider].bullets.push( new KBulletSpawner(self.app, self.parentstate,
                                               -Math.PI/2, 0, 1));
-        self.data[2*patternDivider].push( new KBulletSpawner(self.app, self.parentstate,
+        self.data[2*patternDivider].bullets.push( new KBulletSpawner(self.app, self.parentstate,
                                               Math.PI/2, 0, 1));
         
         self.starttime = self.app.clock.elapsedTime;
@@ -57,9 +57,10 @@ function KPattern(app, parentstate){
             self.previousMicroTap = microtap;
             
             if(self.data[microtap] !== undefined){
-                // self.data[n] must be an array.
+                // self.data[n] must be a Pattern Element.
                 
-                // TODO spawn bullets
+                self.data[microtap].spawnBullets();
+                self.data[microtap].spawnTargets();
             }
             
             
@@ -101,14 +102,28 @@ function KPatternElement(app, parentstate)
     self.init = function(){
         self.app = app;
         self.parentstate = parentstate;
+        
+        self.bullets = [];
+        self.targets = [];
 
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
     
-    self.update = function()
+    self.spawnBullets = function()
     {
-        // Nothing ?
+        for(var i=0 ; i<self.bullets.length ; i++)
+        {
+            self.bullets[i].spawn();
+        }
+    }
+    
+    self.spawnTargets = function()
+    {
+        for(var i=0 ; i<self.targets.length ; i++)
+        {
+            self.targets[i].spawn();
+        }
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////
@@ -151,7 +166,7 @@ function KBulletSpawner(app, parentstate, rad, off, speed){
     
     self.spawn = function()
     {
-        
+        self.parentstate.bullets.addBullet(self.rad, self.off, self.speed);
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

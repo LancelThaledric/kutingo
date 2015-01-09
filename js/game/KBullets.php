@@ -20,6 +20,11 @@ function KBullets(app, parentstate){
     self.directions;
     self.speeds;
     self.hasBounced;
+    self.dist;
+    self.exists;
+    
+    self.nb;
+    
     
     // Display
     
@@ -31,37 +36,39 @@ function KBullets(app, parentstate){
         self.app = app;
         self.parentstate = parentstate;
         
-        var nb = 2;
+        self.nb = 256;
         
         var geombuf = new THREE.BufferGeometry();
-        self.positions = new Float32Array(nb*3);
-        self.positionstm1 = new Float32Array(nb*3);     // pos at t-1
+        self.positions = new Float32Array(self.nb*3);
+        self.positionstm1 = new Float32Array(self.nb*3);     // pos at t-1
         self.directions = [];
         self.speeds = [];
         self.hasBounced = [];
+        self.exists = [];
+        
+        self.dist = 50;
         
         var rad;
         var off;
         
-        for ( var i = 0, is3 = 0 ; i < self.positions.length; i += 3, is3++ )
+        for ( var i = 0, is3 = 0 ; i < self.nb*3; i += 3, is3++ )
         {
             
-            rad = Math.random()*Math.PI*2;
+            /*rad = Math.random()*Math.PI*2;
             //rad = Math.PI / 2;
             off = Math.random()*40-20;
             //off = 0;
-            dist = 70;
-            self.positions[i] = Math.cos(rad) * dist * self.app.aspectRatio * Math.SQRT2;
-            self.positions[i+1] = Math.sin(rad) * dist * self.app.aspectRatio * Math.SQRT2;
+            self.positions[i] = Math.cos(rad) * self.dist * self.app.aspectRatio * Math.SQRT2;
+            self.positions[i+1] = Math.sin(rad) * self.dist * self.app.aspectRatio * Math.SQRT2;
             self.positions[i+2] = 0;
             
             self.directions[is3] = -rad;
             self.speeds[is3] = 1;
             self.hasBounced[is3] = false;
             self.positions[i] += off * Math.cos(rad + Math.PI/2);
-            self.positions[i+1] += off * Math.sin(rad + Math.PI/2);
+            self.positions[i+1] += off * Math.sin(rad + Math.PI/2);*/
+            self.exists[is3] = false;
         }
-        geombuf.addAttribute( 'position', new THREE.BufferAttribute( self.positions, 3 ) );
         
         var material = new THREE.PointCloudMaterial(
             {size:4, sizeAttenuation:false}
@@ -82,7 +89,7 @@ function KBullets(app, parentstate){
     
     self.update = function()
     {
-        for ( var i = 0, is3 = 0 ; i < self.positions.length; i += 3, is3++ )
+        for ( var i = 0, is3 = 0 ; i < self.nb*3; i += 3, is3++ )
         {
             self.positionstm1[i] = self.positions[i];
             self.positionstm1[i+1] = self.positions[i+1];
@@ -97,6 +104,29 @@ function KBullets(app, parentstate){
     self.draw = function()
     {
 
+    }
+    
+    self.addBullet = function(rad, off, speed)
+    {
+        //step 1 : find a position within the table where the bullet is free
+        var i ;
+        for(i = 0; i<self.nb; ++i){
+            if(!self.exists[i]) break;
+        }
+        
+        // i is the number of the free index
+        
+        console.log("addBUllet at " + i);
+        self.positions[i*3] = Math.cos(rad) * self.dist * self.app.aspectRatio * Math.SQRT2;
+        self.positions[i*3+1] = Math.sin(rad) * self.dist * self.app.aspectRatio * Math.SQRT2;
+        self.positions[i*3+2] = 0;
+
+        self.directions[i] = -rad;
+        self.speeds[i] = speed;
+        self.hasBounced[i] = false;
+        self.positions[i*3] += off * Math.cos(rad + Math.PI/2);
+        self.positions[i*3+1] += off * Math.sin(rad + Math.PI/2);
+        self.exists[i] = true;
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

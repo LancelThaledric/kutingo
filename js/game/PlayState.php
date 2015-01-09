@@ -116,7 +116,7 @@ function PlayState(app){
         for(var i=0, is3 = 0 ; i<self.bullets.positions.length ; i+= 3, is3++)
         {
             // Step 1 : If the ball has already bounced, we don t compute it.
-            if(self.bullets.hasBounced[is3])
+            if(self.bullets.hasBounced[is3] || !self.bullets.exists[is3])
                 continue;
             
             //Step 2 : Check if the bullet has crossed the line            

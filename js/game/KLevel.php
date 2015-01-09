@@ -40,10 +40,10 @@ function KLevel(app, parentstate){
         [
             //new Pattern_CrossBullet(),
             //new Pattern_CrossBulletDiag(),
-            new Pattern_LeftBulletRafale(),
-            new Pattern_RightBulletRafale(),
-            new Pattern_BulletFan(),
-            new Pattern_TargetDiagFan()
+            new Pattern_LeftBulletRafale()
+            //new Pattern_RightBulletRafale(),
+            //new Pattern_BulletFan()
+            //new Pattern_TargetDiagFan()
             //new Pattern_TargetSoloRandom()
         ];
     }

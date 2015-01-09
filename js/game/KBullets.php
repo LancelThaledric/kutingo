@@ -47,8 +47,8 @@ function KBullets(app, parentstate){
         self.hasBounced = [];
         self.exists = [];
         
-        self.dist = 90;
-        self.cleardist = 90;
+        self.dist = Math.sqrt(10000 + 10000*self.app.aspectRatio*self.app.aspectRatio);
+        self.cleardist = self.dist + 10;
         
         var rad;
         var off;
@@ -119,9 +119,8 @@ function KBullets(app, parentstate){
         
         // i is the number of the free index
         
-        //console.log("addBUllet at " + i);
-        self.positions[i*3] = Math.cos(rad) * self.dist * self.app.aspectRatio * Math.SQRT2;
-        self.positions[i*3+1] = Math.sin(rad) * self.dist * self.app.aspectRatio * Math.SQRT2;
+        self.positions[i*3] = Math.cos(rad) * self.dist;
+        self.positions[i*3+1] = Math.sin(rad) * self.dist;
         self.positions[i*3+2] = 0;
 
         self.directions[i] = -rad;
@@ -136,8 +135,8 @@ function KBullets(app, parentstate){
         for ( var i = 0, is3 = 0 ; i < self.nb*3; i += 3, is3++ )
         {
             if(!self.exists[is3]) continue;
-            if( self.hasBounced[is3] &&
-                self.positions[i] * self.positions[i] + self.positions[i+1] * self.positions[i+1] > self.cleardist * self.cleardist
+            
+            if(self.positions[i] * self.positions[i] + self.positions[i+1] * self.positions[i+1] > self.cleardist * self.cleardist
             )
             {
                 self.exists[is3] = false;

@@ -118,7 +118,6 @@ function PlayState(app){
     {
         //change pattern
         var rand = Math.floor((Math.random() * self.patternlist.length));
-        console.log('pat'+self.pattern);
         self.pattern = self.patternlist[rand].setPattern(self.pattern);
         self.pattern.reset();
     }

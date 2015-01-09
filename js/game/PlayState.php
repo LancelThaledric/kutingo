@@ -76,7 +76,11 @@ function PlayState(app){
     {
         // Tap update
         self.tap = Math.floor(self.app.clock.elapsedTime / self.bpm);
-        self.pattern.update();
+        if(!self.pattern.update())
+        {
+            self.pattern = new KPattern(self.app, self);
+        }
+        
         
         self.line.update();
         self.bullets.update();

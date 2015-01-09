@@ -62,11 +62,12 @@ function KPattern(app, parentstate){
                 self.data[microtap].spawnBullets();
                 self.data[microtap].spawnTargets();
             }
-            
-            
+        
+        if(microtap >= self.duration * patternDivider)
+            return false;   //pattern is finished
             
         }
-        
+        return true;
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

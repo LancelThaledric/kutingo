@@ -46,7 +46,7 @@ function KBullets(app, parentstate){
         self.hasBounced = [];
         self.exists = [];
         
-        self.dist = 50;
+        self.dist = 90;
         
         var rad;
         var off;

@@ -7,12 +7,12 @@
 function KPattern(app, parentstate){
     var self = this;
     
-    var patternDivider = 16;
-    
     // Members Vars ///////////////////////////////////////////////////////////////
 
     self.app;
     self.parentstate;
+    
+    self.patternDivider;
     
     // Logic
     self.duration;
@@ -25,7 +25,8 @@ function KPattern(app, parentstate){
     self.init = function(){
         self.app = app;
         self.parentstate = parentstate;
-        
+        self.patternDivider = 16;
+        /*
         self.duration = 4;
         
         self.data = new Array(self.duration * patternDivider);
@@ -42,22 +43,23 @@ function KPattern(app, parentstate){
                                               -Math.PI/2, 0, 1));
         self.data[2*patternDivider].bullets.push( new KBulletSpawner(self.app, self.parentstate,
                                               Math.PI/2, 0, 1));
-        
-        self.data[0].targets.push( new KTargetSpawner(self.app, self.parentstate,
+        self.data[1*patternDivider] = new KPatternElement();
+        self.data[1*patternDivider].targets.push( new KTargetSpawner(self.app, self.parentstate,
                                               5*Math.PI/4, 20, 1, 10));
-        self.data[0].targets.push( new KTargetSpawner(self.app, self.parentstate,
+        self.data[3*patternDivider] = new KPatternElement();
+        self.data[3*patternDivider].targets.push( new KTargetSpawner(self.app, self.parentstate,
                                               Math.PI/4, 20, 1, 10));
+        */
         
-        self.starttime = self.app.clock.elapsedTime;
-        self.previousMicroTap = -1;
-
+        self.reset();
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
     
     self.update = function()
     {        
-        var microtap = Math.floor((self.app.clock.elapsedTime - self.starttime) / (self.parentstate.bpm / patternDivider));
+        
+        var microtap = Math.floor((self.app.clock.elapsedTime - self.starttime) / (self.parentstate.bpm / self.patternDivider));
         if(microtap > self.previousMicroTap){
             self.previousMicroTap = microtap;
             
@@ -68,11 +70,16 @@ function KPattern(app, parentstate){
                 self.data[microtap].spawnTargets();
             }
         
-        if(microtap >= self.duration * patternDivider)
+        if(microtap >= self.duration * self.patternDivider)
             return false;   //pattern is finished
             
         }
         return true;
+    }
+    
+    self.reset = function(){
+        self.starttime = self.app.clock.elapsedTime;
+        self.previousMicroTap = -1;
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

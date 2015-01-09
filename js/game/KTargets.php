@@ -39,8 +39,8 @@ function KTarget(app, parentstate){
         self.position = new THREE.Vector3(0, 0, 10);
         self.rotation = 0;
         self.rotationSpeed = Math.PI / 128;
-        self.direction = -rad;
-        self.speed = 1;
+        self.direction = 0;
+        self.speed = 0;
 
         
         self.geometry = new THREE.BoxGeometry( 1, 1, 1);

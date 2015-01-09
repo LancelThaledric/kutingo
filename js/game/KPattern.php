@@ -19,6 +19,7 @@ function KPattern(app, parentstate){
     self.data;
     self.starttime;
     self.previousMicroTap;
+    self.initfunc;
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
@@ -26,6 +27,7 @@ function KPattern(app, parentstate){
         self.app = app;
         self.parentstate = parentstate;
         self.patternDivider = 16;
+        self.initfunc = null;
         /*
         self.duration = 4;
         
@@ -80,6 +82,11 @@ function KPattern(app, parentstate){
     self.reset = function(){
         self.starttime = self.app.clock.elapsedTime;
         self.previousMicroTap = -1;
+        if(self.initfunc !== null)
+        {
+            
+            self.initfunc(this);
+        }
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

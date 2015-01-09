@@ -16,6 +16,7 @@ function KTarget(app, parentstate){
     
     self.position;
     self.rotation;
+    self.rotationSpeed;
     self.direction;
     self.speed;
     self.size;
@@ -47,6 +48,7 @@ function KTarget(app, parentstate){
         
         self.position = new THREE.Vector3(x, y, z);
         self.rotation = 0;
+        self.rotationSpeed = Math.PI / 128;
         self.direction = -rad;
         self.speed = 1;
         
@@ -69,6 +71,8 @@ function KTarget(app, parentstate){
     {        
         self.position.x -= Math.cos(self.direction) * self.speed;
         self.position.y += Math.sin(self.direction) * self.speed;
+        
+        self.rotation += self.rotationSpeed;
     }
     
     self.draw = function()
@@ -89,7 +93,7 @@ function KTarget(app, parentstate){
         {
             return false;   
         }
-        console.log("distance = " + p.distanceTo(pos)+ ", L = " + L);
+        //console.log("distance = " + p.distanceTo(pos)+ ", L = " + L);
         
         var v1, v2;
         var v1_v2 = new THREE.Vector2(0, 0), v1_p = new THREE.Vector2(0, 0);
@@ -99,19 +103,19 @@ function KTarget(app, parentstate){
         
         vertices.push(new THREE.Vector2(
             L * Math.cos(Math.PI / 4 + self.rotation) + self.position.x,
-            L * Math.cos(Math.PI / 4 + self.rotation) + self.position.y));
+            L * Math.sin(Math.PI / 4 + self.rotation) + self.position.y));
         
         vertices.push(new THREE.Vector2(
             L * Math.cos(Math.PI * 3 / 4 + self.rotation) + self.position.x,
-            L * Math.cos(Math.PI * 3 / 4 + self.rotation) + self.position.y));
+            L * Math.sin(Math.PI * 3 / 4 + self.rotation) + self.position.y));
         
         vertices.push(new THREE.Vector2(
             L * Math.cos(Math.PI * 5 / 4 + self.rotation) + self.position.x,
-            L * Math.cos(Math.PI * 5 / 4 + self.rotation) + self.position.y));
+            L * Math.sin(Math.PI * 5 / 4 + self.rotation) + self.position.y));
         
         vertices.push(new THREE.Vector2(
             L * Math.cos(Math.PI * 7 / 4 + self.rotation) + self.position.x,
-            L * Math.cos(Math.PI * 7 / 4 + self.rotation) + self.position.y));
+            L * Math.sin(Math.PI * 7 / 4 + self.rotation) + self.position.y));
        
         for(var i = 0; i < vertices.length; i++)
         {
@@ -122,8 +126,8 @@ function KTarget(app, parentstate){
             else
                 v2 = vertices[i+1];
 
-            v1_v2.x = v2.x - v1.x;
-            v1_v2.y = v2.y - v1.y;
+            v1_p.set(p.x - v1.x, p.y - v1.y);
+            v1_v2.set(v2.x - v1.x, v2.y - v1.y);
             det = v1_p.x * v1_p.y - v1_v2.y * v1_p.x;
             if (det < 0)
                 return false;
@@ -138,31 +142,44 @@ function KTarget(app, parentstate){
         var pos = new THREE.Vector2(self.position.x, 
                                     self.position.y);
         
-        if(c.distanceTo(pos) > line.size - L)
+        var v1, v2, end1, end2;
+        end1 = new THREE.Vector2(
+            Math.cos(line.orientation + Math.PI/2) * line.size / 2,
+            Math.sin(line.orientation + Math.PI/2) * line.size / 2);
+        end2 = new THREE.Vector2(
+            Math.cos(line.orientation - Math.PI/2) * line.size / 2,
+            Math.sin(line.orientation - Math.PI/2) * line.size / 2);
+         
+        console.log("end1 : x = " + end1.x + ", y = " + end1.y);
+        console.log("end2 : x = " + end2.x + ", y = " + end2.y);
+        
+        if(c.distanceTo(pos) > line.size + L)
         {
             return false;   
         }
-        console.log("distance = " + c.distanceTo(pos)+ ", L + r = " + (L+ line.size));
-        
+        console.log("distance = " + c.distanceTo(pos)+ ", L + r = " + (L + line.size));
+         
         var vertices = new Array();
         var intersect;
         
         vertices.push(new THREE.Vector2(
             L * Math.cos(Math.PI / 4 + self.rotation) + self.position.x,
-            L * Math.cos(Math.PI / 4 + self.rotation) + self.position.y));
+            L * Math.sin(Math.PI / 4 + self.rotation) + self.position.y));
         
         vertices.push(new THREE.Vector2(
             L * Math.cos(Math.PI * 3 / 4 + self.rotation) + self.position.x,
-            L * Math.cos(Math.PI * 3 / 4 + self.rotation) + self.position.y));
+            L * Math.sin(Math.PI * 3 / 4 + self.rotation) + self.position.y));
         
         vertices.push(new THREE.Vector2(
             L * Math.cos(Math.PI * 5 / 4 + self.rotation) + self.position.x,
-            L * Math.cos(Math.PI * 5 / 4 + self.rotation) + self.position.y));
+            L * Math.sin(Math.PI * 5 / 4 + self.rotation) + self.position.y));
         
         vertices.push(new THREE.Vector2(
             L * Math.cos(Math.PI * 7 / 4 + self.rotation) + self.position.x,
-            L * Math.cos(Math.PI * 7 / 4 + self.rotation) + self.position.y));
+            L * Math.sin(Math.PI * 7 / 4 + self.rotation) + self.position.y));
        
+        console.log("end1 : x = " + end1.x + ", y = " + end1.y);
+        console.log("end2 : x = " + end2.x + ", y = " + end2.y);
         for(var i = 0; i < vertices.length; i++)
         {
             v1 = vertices[i];
@@ -172,6 +189,19 @@ function KTarget(app, parentstate){
             else
                 v2 = vertices[i+1]; 
             
+            console.log("v1 : x = " + v1.x + ", y = " + v1.y);
+            console.log("v2 : x = " + v2.x + ", y = " + v2.y);
+            console.log("v1_v2 : x = " + (v2.x - v1.x) + ", y = " + (v2.y - v1.y));
+            console.log("norme v1_v2 = "    + (v2.x - v1.x) * (v2.x - v1.x) 
+                                            + (v2.y - v1.y) * (v2.y - v1.y));
+            console.log("------");
+            
+            if(collisionSegmentSegment(v1, v2, end1, end2))
+            {
+                return true;
+            }
+            
+            /*
             intersect = segmentIntersect(v1.x, v1.y,
                                  v2.x, v2.y, 
                                  pos.x, pos.y, 
@@ -181,8 +211,12 @@ function KTarget(app, parentstate){
             {
                 return true;    
             }
+            */
     
         }
+        console.log("------");
+        console.log("------");
+        
         return false;
     }
     

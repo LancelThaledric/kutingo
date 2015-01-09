@@ -34,6 +34,8 @@ function PlayState(app){
     
     self.pattern;
     
+    self.score;
+    
     // Constructor  ///////////////////////////////////////////////////////////////
     
     self.init = function(){

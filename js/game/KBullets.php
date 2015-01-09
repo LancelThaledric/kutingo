@@ -31,7 +31,7 @@ function KBullets(app, parentstate){
         self.app = app;
         self.parentstate = parentstate;
         
-        var nb = 50;
+        var nb = 2;
         
         var geombuf = new THREE.BufferGeometry();
         self.positions = new Float32Array(nb*3);

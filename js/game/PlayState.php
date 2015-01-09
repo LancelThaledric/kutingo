@@ -47,7 +47,7 @@ function PlayState(app){
         self.scalarstm1 = new Array(self.bullets.directions.lenght);
         self.scalarst = new Array(self.bullets.directions.lenght);
         
-        var nb_targets = 5;
+        var nb_targets = 1;
         self.targets = new Array(nb_targets);
         for(var i = 0; i < self.targets.length; i++)
         {
@@ -115,7 +115,7 @@ function PlayState(app){
         // Step 0 : Compute each bullet
         for(var i=0, is3 = 0 ; i<self.bullets.positions.length ; i+= 3, is3++)
         {
-            // Step 1 : If the ball has already bounced, we don't compute it.
+            // Step 1 : If the ball has already bounced, we don t compute it.
             if(self.bullets.hasBounced[is3])
                 continue;
             
@@ -171,24 +171,37 @@ function PlayState(app){
             
         }
     }
-    
-    
+        
     self.checkTargetsCollisions = function()
     {
-	/*
-       for(var i = 0; i < self.targets.length; i++)
+        var spliced;
+        for(var i = 0; i < self.targets.length; i++)
         {
-            for(var j = 0; j < self.bullets.positions.length; j++)
+            if(self.targets[i].intersectBar(self.line))
             {
-                if(self.targets[i].geometry.boundingBox.containsPoint(
-                    self.bullets.positions[j]))
+                // The target has been hit by a bullet.
+                console.log("GAME OVER ?");
+            }
+            
+            spliced = false;
+            for(var js3 = 0; js3 < self.bullets.positions.length && !spliced;
+                js3 += 3)
+            {
+                var p = new THREE.Vector2(
+                                    self.bullets.positions[js3],
+                                    self.bullets.positions[js3 + 1]);
+                /*console.log("i = " + i + ", j = " + js3 / 3);
+                console.log("i = " + i + " : target = " + self.targets[i] 
+                            + ", length = " + self.targets.length);*/
+                if(self.targets[i].containsPoint(p))
                 {
                     // The target has been hit by a bullet.
                     console.log("Target " + i + " hit !");
+                    self.targets.splice(i, 1);
+                    spliced = true;
                 }
             }
         }
-	*/
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

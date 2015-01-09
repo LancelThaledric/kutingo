@@ -10,6 +10,8 @@ require_once('KLine.php');
 require_once('KBullets.php');
 require_once('KTargets.php');
 require_once('KPattern.php');
+require_once('KLevel.php');
+require_once('KPatternBuilder.php');
 
 ?>
 
@@ -33,6 +35,8 @@ function PlayState(app){
     self.tap;
     
     self.pattern;
+    self.patternlist;
+    self.level;
     
     self.score;
     
@@ -49,17 +53,20 @@ function PlayState(app){
         self.scalarstm1 = new Array(self.bullets.directions.lenght);
         self.scalarst = new Array(self.bullets.directions.lenght);
         
-        var nb_targets = 1;
-        self.targets = new Array(nb_targets);
-        for(var i = 0; i < self.targets.length; i++)
+        var nb_targets = 0;
+        self.targets = new Array();
+        /*for(var i = 0; i < self.targets.length; i++)
         {
             self.targets[i] = new KTarget(self.app, self);
-        }
+        }*/
         
         self.bpm = 60. / 140.;      //beat-time in seconds
         self.tap = 0;
         
-        self.pattern = new KPattern(self.app, self);
+        self.patternlist = [];
+        self.level = new KLevel(self.app, self);
+        self.level.load();
+        self.switchPattern();
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
@@ -80,7 +87,7 @@ function PlayState(app){
         self.tap = Math.floor(self.app.clock.elapsedTime / self.bpm);
         if(!self.pattern.update())
         {
-            self.pattern = new KPattern(self.app, self);
+            self.switchPattern();
         }
         
         
@@ -104,6 +111,15 @@ function PlayState(app){
         {
             self.targets[i].draw();
         }
+    }
+    
+    self.switchPattern = function()
+    {
+        //change pattern
+        var rand = Math.floor((Math.random() * self.patternlist.length));
+        console.log('NewPattern : '+rand);
+        self.pattern = self.patternlist[rand];
+        self.pattern.reset();
     }
     
     self.checkBarCollisions = function()
@@ -208,6 +224,24 @@ function PlayState(app){
                 }
             }
         }
+    }
+    
+    self.addTarget = function(rad, off, speed, size)
+    {
+        var targ = new KTarget(self.app, self);
+        
+        targ.position.x = Math.cos(rad) * targ.dist * self.app.aspectRatio * Math.SQRT2 
+            + off * Math.cos(rad + Math.PI/2);
+        
+        targ.position.y = Math.sin(rad) * targ.dist * self.app.aspectRatio * Math.SQRT2
+            + off * Math.sin(rad + Math.PI/2);
+        
+        targ.direction = -rad;
+        
+        targ.speed = speed;
+        targ.size = size;
+        
+        self.targets.push(targ);
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

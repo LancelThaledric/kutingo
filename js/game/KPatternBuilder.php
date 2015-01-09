@@ -76,3 +76,18 @@ function Pattern_BulletFan(pat)
     }
     return pat;
 }
+
+function Pattern_TargetDiagFan(pat)
+{
+    pat.duration = 4;
+    pat.data = new Array(pat.duration * pat.patternDivider);
+    
+    for(var i=0; i<pat.duration ; i++)
+    {
+        pat.data[i*pat.patternDivider] = new KPatternElement();
+        pat.data[i*pat.patternDivider].targets.push(
+            new KTargetSpawner(pat.app, pat.parentstate,   (2*i+1)*Math.PI/4, 20, 0.4, 10)
+        );
+    }
+    return pat;
+}

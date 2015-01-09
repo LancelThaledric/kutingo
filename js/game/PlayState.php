@@ -38,6 +38,8 @@ function PlayState(app){
     self.patternlist;
     self.level;
     
+    self.score;
+    
     // Constructor  ///////////////////////////////////////////////////////////////
     
     self.init = function(){

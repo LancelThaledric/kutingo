@@ -119,7 +119,7 @@ function KBullets(app, parentstate){
         
         // i is the number of the free index
         
-        console.log("addBUllet at " + i);
+        //console.log("addBUllet at " + i);
         self.positions[i*3] = Math.cos(rad) * self.dist * self.app.aspectRatio * Math.SQRT2;
         self.positions[i*3+1] = Math.sin(rad) * self.dist * self.app.aspectRatio * Math.SQRT2;
         self.positions[i*3+2] = 0;

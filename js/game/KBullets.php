@@ -22,6 +22,7 @@ function KBullets(app, parentstate){
     self.hasBounced;
     self.dist;
     self.exists;
+    self.cleardist;
     
     self.nb;
     
@@ -47,6 +48,7 @@ function KBullets(app, parentstate){
         self.exists = [];
         
         self.dist = 90;
+        self.cleardist = 90;
         
         var rad;
         var off;
@@ -98,6 +100,7 @@ function KBullets(app, parentstate){
             self.positions[i+1] += Math.sin(self.directions[is3]) * self.speeds[is3];
             
         }
+        self.clearbullets();
         self.particles.geometry.addAttribute( 'position', new THREE.BufferAttribute( self.positions, 3 ) );
     }
     
@@ -127,6 +130,20 @@ function KBullets(app, parentstate){
         self.positions[i*3] += off * Math.cos(rad + Math.PI/2);
         self.positions[i*3+1] += off * Math.sin(rad + Math.PI/2);
         self.exists[i] = true;
+    }
+    
+    self.clearbullets = function(){
+        for ( var i = 0, is3 = 0 ; i < self.nb*3; i += 3, is3++ )
+        {
+            if(!self.exists[is3]) continue;
+            if( self.hasBounced[is3] &&
+                self.positions[i] * self.positions[i] + self.positions[i+1] * self.positions[i+1] > self.cleardist * self.cleardist
+            )
+            {
+                self.exists[is3] = false;
+                console.log("clear bullet " + is3);
+            }
+        }
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

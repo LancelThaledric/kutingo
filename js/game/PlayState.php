@@ -9,6 +9,7 @@
 require_once('KLine.php');
 require_once('KBullets.php');
 require_once('KTargets.php');
+require_once('KPattern.php');
 
 ?>
 
@@ -28,15 +29,20 @@ function PlayState(app){
     
     self.targets;
     
+    self.bpm;
+    self.tap;
+    
+    self.pattern;
+    
     // Constructor  ///////////////////////////////////////////////////////////////
     
     self.init = function(){
         
         self.app = app;
         
-        self.line = new KLine(self.app);
+        self.line = new KLine(self.app, self);
         
-        self.bullets = new KBullets(self.app);
+        self.bullets = new KBullets(self.app, self);
         self.scalarstm2 = new Array(self.bullets.directions.lenght);
         self.scalarstm1 = new Array(self.bullets.directions.lenght);
         self.scalarst = new Array(self.bullets.directions.lenght);
@@ -45,8 +51,13 @@ function PlayState(app){
         self.targets = new Array(nb_targets);
         for(var i = 0; i < self.targets.length; i++)
         {
-            self.targets[i] = new KTarget(self.app);
+            self.targets[i] = new KTarget(self.app, self);
         }
+        
+        self.bpm = 60. / 140.;      //beat-time in seconds
+        self.tap = 0;
+        
+        self.pattern = new KPattern(self.app, self);
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
@@ -63,6 +74,10 @@ function PlayState(app){
     
     self.update = function()
     {
+        // Tap update
+        self.tap = Math.floor(self.app.clock.elapsedTime / self.bpm);
+        self.pattern.update();
+        
         self.line.update();
         self.bullets.update();
         for(var i = 0; i < self.targets.length; i++)
@@ -136,7 +151,6 @@ function PlayState(app){
             
             
             // Else : There is a cross of the line !
-            console.log("REBOND !");
             
             // Step 4 : Collision ! We compute the direction of the bullet
             /*

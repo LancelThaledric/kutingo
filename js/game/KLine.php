@@ -4,12 +4,13 @@
         Line that is controlled by the player
 ***********************************/
 
-function KLine(app){
+function KLine(app, parentstate){
     var self = this;
     
     // Members Vars ///////////////////////////////////////////////////////////////
 
     self.app;
+    self.parentstate;
     
     // Logic
     self.size;          // Lenght of the line
@@ -26,6 +27,7 @@ function KLine(app){
     
     self.init = function(){
         self.app = app;
+        self.parentstate = parentstate;
         
         self.size = 20;
         //self.orientation = Math.PI / 3;

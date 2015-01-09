@@ -4,12 +4,13 @@
         Target Manager of the level
 ***********************************/
 
-function KTarget(app){
+function KTarget(app, parentstate){
     var self = this;
     
     // Members Vars ///////////////////////////////////////////////////////////////
     
     self.app;
+    self.parentstate;
     
     // Logic
     
@@ -29,6 +30,7 @@ function KTarget(app){
     
     self.init = function(){
         self.app = app;
+        self.parentstate = parentstate;
         
         //var rad = Math.random()*Math.PI*2;
         //var rad = Math.PI / 2;

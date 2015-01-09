@@ -5,12 +5,13 @@
 ***********************************/
 
 
-function KBullets(app){
+function KBullets(app, parentstate){
     var self = this;
     
     // Members Vars ///////////////////////////////////////////////////////////////
 
     self.app;
+    self.parentstate;
     
     // Logic
     
@@ -28,6 +29,7 @@ function KBullets(app){
     
     self.init = function(){
         self.app = app;
+        self.parentstate = parentstate;
         
         var nb = 50;
         

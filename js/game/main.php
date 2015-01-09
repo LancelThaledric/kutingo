@@ -80,11 +80,11 @@ function Kutingo(){
         self.eventHandler = new EventHandler(self);
         self.states = [];
         
-        // Stating Game on the Title Screen
-        self.states.push(new PlayState(self));
-        
         // Clock Launch
         self.clock = new THREE.Clock(true);
+        
+        // Stating Game on the Title Screen
+        self.states.push(new PlayState(self));
         
         // Launch Render Loop
         self.render();

@@ -38,12 +38,13 @@ function KLevel(app, parentstate){
         self.parentstate.bpm = self.bpm;
         self.parentstate.patternlist = 
         [
-            Pattern_CrossBullet(new KPattern(self.app, self.parentstate)),
-            Pattern_CrossBulletDiag(new KPattern(self.app, self.parentstate)),
+            //Pattern_CrossBullet(new KPattern(self.app, self.parentstate)),
+            //Pattern_CrossBulletDiag(new KPattern(self.app, self.parentstate)),
             //Pattern_LeftBulletRafale(new KPattern(self.app, self.parentstate)),
             //Pattern_RightBulletRafale(new KPattern(self.app, self.parentstate)),
             //Pattern_BulletFan(new KPattern(self.app, self.parentstate)),
-            Pattern_TargetDiagFan(new KPattern(self.app, self.parentstate))
+            //Pattern_TargetDiagFan(new KPattern(self.app, self.parentstate)),
+            Pattern_TargetSoloRandom(new KPattern(self.app, self.parentstate))
         ];
     }
     

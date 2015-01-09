@@ -91,3 +91,16 @@ function Pattern_TargetDiagFan(pat)
     }
     return pat;
 }
+
+function Pattern_TargetSoloRandom(pat)
+{
+    pat.duration = 2;
+    pat.data = new Array(pat.duration * pat.patternDivider);
+    
+    pat.data[0] = new KPatternElement();
+    pat.data[0].targets.push(
+        new KTargetSpawner(pat.app, pat.parentstate,
+                           Math.random()*Math.PI*2, Math.random()*20-10, 0.4, 10)
+    );
+    return pat;
+}

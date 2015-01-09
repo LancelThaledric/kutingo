@@ -43,6 +43,11 @@ function KPattern(app, parentstate){
         self.data[2*patternDivider].bullets.push( new KBulletSpawner(self.app, self.parentstate,
                                               Math.PI/2, 0, 1));
         
+        self.data[0].targets.push( new KTargetSpawner(self.app, self.parentstate,
+                                              5*Math.PI/4, 20, 1, 10));
+        self.data[0].targets.push( new KTargetSpawner(self.app, self.parentstate,
+                                              Math.PI/4, 20, 1, 10));
+        
         self.starttime = self.app.clock.elapsedTime;
         self.previousMicroTap = -1;
 
@@ -182,7 +187,7 @@ function KBulletSpawner(app, parentstate, rad, off, speed){
         All the information of How to spawn a bullet
 ***********************************/
 
-function KTargetSpawner(app, parentstate){
+function KTargetSpawner(app, parentstate, rad, off, speed, size){
     var self = this;
     
     // Members Vars ///////////////////////////////////////////////////////////////
@@ -194,20 +199,25 @@ function KTargetSpawner(app, parentstate){
     self.off;
     self.rad;
     self.speed;
-    self.size;
+    self.size
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
     self.init = function(){
         self.app = app;
         self.parentstate = parentstate;
+        
+        self.rad = rad;
+        self.off = off;
+        self.speed = speed;
+        self.size = size;
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
     
     self.spawn = function()
     {
-        
+        self.parentstate.addTarget(self.rad, self.off, self.speed, self.size);
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

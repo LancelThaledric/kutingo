@@ -47,12 +47,12 @@ function PlayState(app){
         self.scalarstm1 = new Array(self.bullets.directions.lenght);
         self.scalarst = new Array(self.bullets.directions.lenght);
         
-        var nb_targets = 1;
-        self.targets = new Array(nb_targets);
-        for(var i = 0; i < self.targets.length; i++)
+        var nb_targets = 0;
+        self.targets = new Array();
+        /*for(var i = 0; i < self.targets.length; i++)
         {
             self.targets[i] = new KTarget(self.app, self);
-        }
+        }*/
         
         self.bpm = 60. / 140.;      //beat-time in seconds
         self.tap = 0;
@@ -206,6 +206,24 @@ function PlayState(app){
                 }
             }
         }
+    }
+    
+    self.addTarget = function(rad, off, speed, size)
+    {
+        var targ = new KTarget(self.app, self);
+        
+        targ.position.x = Math.cos(rad) * targ.dist * self.app.aspectRatio * Math.SQRT2 
+            + off * Math.cos(rad + Math.PI/2);
+        
+        targ.position.y = Math.sin(rad) * targ.dist * self.app.aspectRatio * Math.SQRT2
+            + off * Math.sin(rad + Math.PI/2);
+        
+        targ.direction = -rad;
+        
+        targ.speed = speed;
+        targ.size = size;
+        
+        self.targets.push(targ);
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

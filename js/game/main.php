@@ -34,6 +34,7 @@ function Kutingo(){
     self.renderer;
     
     self.canvas;
+    self.hud;
     
     self.eventHandler;
     
@@ -75,6 +76,17 @@ function Kutingo(){
         self.canvas.setAttribute("id", "glrenderer");
         document.getElementById("game").appendChild( self.canvas );
         self.onResize();
+        
+        // HUD
+        self.hud = document.createElement('div');
+        document.getElementById("game").appendChild( self.hud );
+        $(self.hud).css({
+            'position' : 'absolute',
+            'width' : '100%',
+            'height' : '100%',
+            'top' : 0,
+            'line-height' : '40px'
+        });
         
         // States
         self.eventHandler = new EventHandler(self);

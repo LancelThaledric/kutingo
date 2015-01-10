@@ -35,6 +35,8 @@ function PlayState(app){
     
     self.bpm;
     self.tap;
+    self.starttime;
+    self.elapsed;
     
     self.pattern;
     self.patternlist;
@@ -75,6 +77,8 @@ function PlayState(app){
         
         self.bpm = 60. / 140.;      //beat-time in seconds
         self.tap = 0;
+        self.starttime = self.app.clock.elapsedTime;
+        self.elapsed = 0;
         
         self.score = new Score(self.app, self);
         
@@ -100,7 +104,8 @@ function PlayState(app){
     self.update = function()
     {
         // Tap update
-        self.tap = Math.floor(self.app.clock.elapsedTime / self.bpm);
+        self.elapsed = self.app.clock.elapsedTime - self.starttime;
+        self.tap = Math.floor(self.elapsed / self.bpm);
         if(!self.pattern.update())
         {
             self.switchPattern();

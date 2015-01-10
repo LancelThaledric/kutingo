@@ -21,19 +21,26 @@ function Score(app, parentstate){
     // display
     
     self.canvas;
-    self.ctx;
-    self.gradient;
+    self.context;
+    self.sprite;
+    self.material;
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
     self.init = function(){
         self.app = app;
         
-        self.bonusscore = 42;
+        self.bonusscore = 0;
         self.timescore = 0;
         self.update();
         
-        //self.disp_text;
+        self.hudelem = document.createElement('div');
+        self.app.hud.appendChild(self.hudelem);
+        
+        $(self.hudelem).css({
+            'font' : '40px monospace bold',
+            'text-shadow' : '#fff 0px 0px 5px, #fff 0px 0px 10px'
+        });
         
     }
     
@@ -41,6 +48,7 @@ function Score(app, parentstate){
     
     self.update = function()
     {        
+        self.timescore = self.parentstate.tap;
         self.totalscore = self.timescore + self.bonusscore;
     }
     
@@ -51,8 +59,8 @@ function Score(app, parentstate){
     
     self.draw = function(){
         // Fill with gradient
+        self.hudelem.innerText = self.totalscore;
         
-        console.log(self.totalscore);
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

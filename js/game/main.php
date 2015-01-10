@@ -45,6 +45,7 @@ function Kutingo(){
     self.deltaTime;
     
     self.soundmanager;
+    self.jinglePlayed;
     
     
     // CONSTRUCTOR  ///////////////////////////////////////////////////////////////
@@ -92,10 +93,23 @@ function Kutingo(){
             'line-height' : '40px'
         });
         
+        //music
+        self.soundmanager = new SoundManager(self);
+        self.jinglePlayed = false;
+        
         // States
         self.eventHandler = new EventHandler(self);
         self.states = [];
         
+        $(self).bind('appMayStart', self.launch);
+        
+    }
+    
+    
+    // Methods  ///////////////////////////////////////////////////////////////////
+    
+    self.launch = function()
+    {
         // Clock Launch
         self.clock = new THREE.Clock(true);
         
@@ -103,15 +117,9 @@ function Kutingo(){
         //self.states.push(new PlayState(self));
         self.states.push(new TitleState(self));
         
-        //music
-        self.soundmanager = new SoundManager(self);
-        
         // Launch Render Loop
         self.render();
     }
-    
-    
-    // Methods  ///////////////////////////////////////////////////////////////////
     
     /*
     update

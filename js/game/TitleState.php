@@ -18,6 +18,15 @@ function TitleState(app){
     self.uniforms;
     self.attributes;
     
+    self.TitleImg;
+    self.TitlePlane;
+    
+    self.StartImg;
+    self.StartPlane;
+    
+    self.starttime;
+    self.time;
+    
     self.noise = [];
     
     self.attributes = {
@@ -97,6 +106,52 @@ function TitleState(app){
         }
         
         self.app.scene.add( self.sphere );
+        
+        
+        
+        
+        
+        self.TitleImg = new THREE.MeshLambertMaterial({
+            map:THREE.ImageUtils.loadTexture('img/Kutingo.png'),
+            transparent : true,
+            opacity : 0
+        });
+        // plane
+        self.TitlePlane = new THREE.Mesh(new THREE.PlaneGeometry(2012, 704),self.TitleImg);
+        self.TitlePlane.overdraw = true;
+        self.TitlePlane.position.set(0,0,290);
+        self.TitlePlane.scale.set(0.004,0.004,0.004);
+        self.app.scene.add(self.TitlePlane);
+        
+        
+        
+        
+        
+        
+        
+        self.StartImg = new THREE.MeshLambertMaterial({
+            map:THREE.ImageUtils.loadTexture('img/start.png'),
+            transparent : true,
+            opacity : 0
+        });
+        // plane
+        self.StartPlane = new THREE.Mesh(new THREE.PlaneGeometry(1597, 275),self.StartImg);
+        self.StartPlane.overdraw = true;
+        self.StartPlane.position.set(0,-2,290);
+        self.StartPlane.scale.set(0.004,0.004,0.004);
+        self.app.scene.add(self.StartPlane);
+        
+        
+        
+        
+        
+        if(!self.app.jinglePlayed)
+        {
+            self.app.soundmanager.sfx_jingle.play();
+            self.app.jinglePlayed = true;
+        }
+        
+        self.starttime = self.app.clock.elapsedTime;
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
@@ -113,6 +168,7 @@ function TitleState(app){
     
     self.update = function()
     {
+        self.time = self.app.clock.elapsedTime - self.starttime;
         var time = Date.now() * 0.005;
 
         self.sphere.rotation.z = 0.01 * time;
@@ -123,8 +179,15 @@ function TitleState(app){
 
 
         }
+        
+        self.TitleImg.opacity = Math.min(1, Math.pow(self.time/2, 10));
+        self.TitleImg.needsUpdate = true;
+        
+        self.StartImg.opacity = Math.min(1, Math.pow(self.time/2-1, 10));
+        self.StartImg.needsUpdate = true;
 
         self.attributes.size.needsUpdate = true;
+        
     }
     
     self.draw = function()
@@ -135,6 +198,8 @@ function TitleState(app){
     self.onDestroy = function()
     {
         self.app.scene.remove(self.sphere);
+        self.app.scene.remove(self.TitlePlane);
+        self.app.scene.remove(self.StartPlane);
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

@@ -16,6 +16,7 @@ function SoundManager(app){
     
     self.sfx_bonus;
     self.sfx_gameover;
+    self.sfx_jingle;
     self.bgm;
     
     
@@ -30,6 +31,7 @@ function SoundManager(app){
           preferFlash: false,
           onready: function() {
             self.initSounds();
+            $(self.app).trigger('appMayStart');
           },
           ontimeout: function() {
             // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
@@ -59,6 +61,13 @@ function SoundManager(app){
             autoLoad:true
         });
         soundManager.setVolume('sfx_gameover',90);
+        
+        self.sfx_jingle = soundManager.createSound({
+            id:'sfx_jingle',
+            url:'sound/KutingoJingle.mp3',
+            autoLoad:true
+        });
+        soundManager.setVolume('sfx_jingle',100);
         
         self.bgm = soundManager.createSound({
             id:'bgm',

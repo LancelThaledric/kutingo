@@ -54,6 +54,7 @@ function KTarget(app, parentstate){
         var L = self.size / (2 * Math.cos(Math.PI / self.nb_vertices));
         self.vertices = new Array();
 
+
         for(var i = 0; i < self.nb_vertices; i++)
         {
             self.vertices.push(new THREE.Vector2(

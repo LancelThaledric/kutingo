@@ -63,6 +63,7 @@ function PlayState(app){
         self.bpm = 60. / 140.;      //beat-time in seconds
         self.tap = 0;
         
+        self.pattern = new KPattern(self.app, self);
         self.patternlist = [];
         self.level = new KLevel(self.app, self);
         self.level.load();
@@ -116,8 +117,7 @@ function PlayState(app){
     {
         //change pattern
         var rand = Math.floor((Math.random() * self.patternlist.length));
-        console.log('NewPattern : '+rand);
-        self.pattern = self.patternlist[rand];
+        self.pattern = self.patternlist[rand].setPattern(self.pattern);
         self.pattern.reset();
     }
     

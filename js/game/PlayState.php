@@ -295,11 +295,12 @@ function PlayState(app){
                     // The target has been hit by a bullet.
                     //console.log("Target " + i + " hit !");
                     self.targets[i].isHit = true;
+                    self.app.soundmanager.sfx_bonus.play();
                 }
             }    
             
             
-            
+            // Bar collisions
             //Step 1 : We compute a Circle-Line Collision To prevent 99% of cases
             var A = [];
             A[0] = Math.cos(self.line.orientation + Math.PI/2) * self.line.size;
@@ -313,8 +314,9 @@ function PlayState(app){
                 continue;
             
             //console.log("MaybeColide");
-            
-            
+            self.app.soundmanager.sfx_gameover.play();
+            self.hasToPop = true;
+            self.app.states.push(new TitleState(self.app));
             
             
         }

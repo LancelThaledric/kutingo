@@ -21,7 +21,6 @@
             </header>
 
             <section class="game" id="game">
-                <audio src="sound/Kutingo.mp3" loop id="bgmusic"></audio>
             </section>
             
             <div class="scroll-indicator">
@@ -84,6 +83,7 @@
         <script type="text/javascript" src="lib/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" src="lib/jquery.mousewheel.min.js"></script>
         <script type="text/javascript" src="lib/three.min.js"></script>
+        <script type="text/javascript" src="lib/soundmanager2.js"></script>
         <script type="text/javascript" src="js/gui.js"></script>
         <script type="text/javascript" src="js/game/main.php"></script>
         
@@ -124,8 +124,8 @@
 				gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
 
 			}
-
-		</script>
+        
+        </script>
         
     </body>
 </html>

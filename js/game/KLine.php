@@ -16,7 +16,7 @@ function KLine(app, parentstate){
     self.size;          // Lenght of the line
     self.orientation;   // Rotaztion in radians. 0 is horizontal.
     self.orientationtm1;    // Rotation at t-1.
-    self.speed;         // Speed of rotation in radian per second
+    self.speed;         // Speed of rotation in radian per tap
     self.color;         // Color of the line
     self.thickness;     // Thickness of the line;
     
@@ -58,14 +58,14 @@ function KLine(app, parentstate){
     {
         if(app.eventHandler.leftKey)
         {
-            self.orientation += self.speed * app.deltaTime;
+            self.orientation += self.speed * self.app.deltaTime * self.parentstate.bpm;
         }
         
         if(app.eventHandler.rightKey)
         {
-            self.orientation -= self.speed * app.deltaTime;
+            self.orientation -= self.speed * self.app.deltaTime * self.parentstate.bpm;
         }
-        self.orientation %= Math.PI; 
+        //self.orientation %= Math.PI; 
     }
     
     self.update = function()

@@ -194,6 +194,7 @@ function PlayState(app){
         
     self.checkTargetsCollisions = function()
     {
+        /*
         for(var i = 0; i < self.targets.length; i++)
         {
             if(self.targets[i].intersectBar(self.line))
@@ -212,7 +213,7 @@ function PlayState(app){
                                     self.bullets.positions[js3 + 1]);
                 /*console.log("i = " + i + ", j = " + js3 / 3);
                 console.log("i = " + i + " : target = " + self.targets[i] 
-                            + ", length = " + self.targets.length);*/
+                            + ", length = " + self.targets.length);//
                 if(self.targets[i].containsPoint(p))
                 {
                     // The target has been hit by a bullet.
@@ -220,10 +221,34 @@ function PlayState(app){
                     self.targets[i].isHit = true;
                 }
             }    
-        }
-        /*
+        }*/
+        
+        
         for(var i = 0; i < self.targets.length; i++)
         {
+            
+            // Bullet Collision
+            for(var js3 = 0; js3 < self.bullets.positions.length; js3 += 3)
+            {
+                if(!self.bullets.exists[js3] || !self.bullets.hasBounced[js3])
+                    continue;
+                    
+                var p = new THREE.Vector2(
+                                    self.bullets.positions[js3],
+                                    self.bullets.positions[js3 + 1]);
+                /*console.log("i = " + i + ", j = " + js3 / 3);
+                console.log("i = " + i + " : target = " + self.targets[i] 
+                            + ", length = " + self.targets.length);*/
+                if(self.targets[i].containsPoint(p))
+                {
+                    // The target has been hit by a bullet.
+                    //console.log("Target " + i + " hit !");
+                    self.targets[i].isHit = true;
+                }
+            }    
+            
+            
+            
             //Step 1 : We compute a Circle-Line Collision To prevent 99% of cases
             var A = [];
             A[0] = Math.cos(self.line.orientation + Math.PI/2) * self.line.size;
@@ -236,9 +261,13 @@ function PlayState(app){
                                     self.targets[i].size/2 * Math.SQRT2))
                 continue;
             
-            console.log("MaybeColide");
+            //console.log("MaybeColide");
+            
+            
+            
+            
         }
-        */
+        
 
     }
     

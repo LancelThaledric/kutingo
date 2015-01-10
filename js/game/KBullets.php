@@ -140,7 +140,7 @@ function KBullets(app, parentstate){
             )
             {
                 self.exists[is3] = false;
-                console.log("clear bullet " + is3);
+                //console.log("clear bullet " + is3);
             }
         }
     }

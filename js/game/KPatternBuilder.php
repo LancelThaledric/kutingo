@@ -118,7 +118,7 @@ var Pattern_TargetDiagFan = function(){
 var Pattern_TargetSoloRandom = function(){
     this.setPattern = function(pat)
     {
-        pat.duration = 64;
+        pat.duration = 1;
         pat.data = new Array(pat.duration * pat.patternDivider);
 
         pat.data[0] = new KPatternElement();

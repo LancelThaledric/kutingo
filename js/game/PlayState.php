@@ -212,7 +212,7 @@ function PlayState(app){
                                     self.bullets.positions[js3 + 1]);
                 /*console.log("i = " + i + ", j = " + js3 / 3);
                 console.log("i = " + i + " : target = " + self.targets[i] 
-                            + ", length = " + self.targets.length);//
+                            + ", length = " + self.targets.length);*/
                 if(self.targets[i].containsPoint(p))
                 {
                     // The target has been hit by a bullet.
@@ -220,8 +220,8 @@ function PlayState(app){
                     self.targets[i].isHit = true;
                 }
             }    
-        }*/
-
+        }
+        /*
         for(var i = 0; i < self.targets.length; i++)
         {
             //Step 1 : We compute a Circle-Line Collision To prevent 99% of cases
@@ -238,7 +238,7 @@ function PlayState(app){
             
             console.log("MaybeColide");
         }
-
+        */
 
     }
     

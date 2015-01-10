@@ -132,4 +132,4 @@ var Pattern_TargetSoloRandom = function(){
     
         return pat;
     }
-};
+}

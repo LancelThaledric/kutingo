@@ -20,8 +20,13 @@ function KTarget(app, parentstate){
     self.direction;
     self.speed;
     self.size;
+    self.nb_vertices;
+    self.vertices;
+    
     self.geometry;
     self.dist;
+    
+    self.isHit;
     
     // Display
     
@@ -42,7 +47,22 @@ function KTarget(app, parentstate){
         self.direction = 0;
         self.speed = 0;
         self.size = 0;
+        
+        self.isHit = false;
+        
+        self.nb_vertices = 4;
+        var L = self.size / (2 * Math.cos(Math.PI / self.nb_vertices));
+        self.vertices = new Array();
 
+
+        for(var i = 0; i < self.nb_vertices; i++)
+        {
+            self.vertices.push(new THREE.Vector2(
+                Math.cos((2 * i + 1) * Math.PI / self.nb_vertices + self.rotation) * self.size 
+                            + self.position.x,
+                Math.sin((2 * i + 1) * Math.PI / self.nb_vertices + self.rotation) * self.size 
+                            + self.position.y)); 
+        }
         
         self.geometry = new THREE.BoxGeometry( 1, 1, 1);
         self.material = new THREE.MeshBasicMaterial( {color: 0x000000} );
@@ -64,6 +84,17 @@ function KTarget(app, parentstate){
         self.position.y += Math.sin(self.direction) * self.speed;
         
         self.rotation += self.rotationSpeed;
+        
+        var L = self.size / (2 * Math.cos(Math.PI / self.nb_vertices));
+        for(var i = 0; i < self.vertices.length; i++)
+        {
+            self.vertices[i].x = 
+                L * Math.cos((2 * i + 1 ) * Math.PI / self.nb_vertices + self.rotation) 
+                + self.position.x;
+            self.vertices[i].y = 
+                L * Math.sin((2 * i + 1 ) * Math.PI / self.nb_vertices + self.rotation) 
+                + self.position.y;
+        }
     }
     
     self.draw = function()
@@ -71,7 +102,7 @@ function KTarget(app, parentstate){
         self.disp_target.position.x = self.position.x;
         self.disp_target.position.y = self.position.y;
         self.disp_target.rotation.z = self.rotation;
-        self.disp_target.scale.set(self.size, self.size, self.size);
+        self.disp_target.scale.set(self.size, self.size, self.size);  
     }
     
     self.containsPoint = function(point)
@@ -90,33 +121,15 @@ function KTarget(app, parentstate){
         var v1, v2;
         var v1_v2 = new THREE.Vector2(0, 0), v1_p = new THREE.Vector2(0, 0);
         var det;
-
-        var vertices = new Array();
-        
-        vertices.push(new THREE.Vector2(
-            L * Math.cos(Math.PI / 4 + self.rotation) + self.position.x,
-            L * Math.sin(Math.PI / 4 + self.rotation) + self.position.y));
-        
-        vertices.push(new THREE.Vector2(
-            L * Math.cos(Math.PI * 3 / 4 + self.rotation) + self.position.x,
-            L * Math.sin(Math.PI * 3 / 4 + self.rotation) + self.position.y));
-        
-        vertices.push(new THREE.Vector2(
-            L * Math.cos(Math.PI * 5 / 4 + self.rotation) + self.position.x,
-            L * Math.sin(Math.PI * 5 / 4 + self.rotation) + self.position.y));
-        
-        vertices.push(new THREE.Vector2(
-            L * Math.cos(Math.PI * 7 / 4 + self.rotation) + self.position.x,
-            L * Math.sin(Math.PI * 7 / 4 + self.rotation) + self.position.y));
        
-        for(var i = 0; i < vertices.length; i++)
+        for(var i = 0; i < self.vertices.length; i++)
         {
-            v1 = vertices[i];
+            v1 = self.vertices[i];
 
-            if (!(i < vertices.length - 1))
-                v2 = vertices[0];
+            if (!(i < self.vertices.length - 1))
+                v2 = self.vertices[0];
             else
-                v2 = vertices[i+1];
+                v2 = self.vertices[i+1];
 
             v1_p.set(p.x - v1.x, p.y - v1.y);
             v1_v2.set(v2.x - v1.x, v2.y - v1.y);
@@ -128,7 +141,8 @@ function KTarget(app, parentstate){
     }
     
     self.intersectBar = function(line)
-    {
+    {       
+        
         var L = self.size / (2 * Math.cos(Math.PI / 4));
         var c = new THREE.Vector2(0, 0);
         var pos = new THREE.Vector2(self.position.x, 
@@ -136,78 +150,31 @@ function KTarget(app, parentstate){
         
         var v1, v2, end1, end2;
         end1 = new THREE.Vector2(
-            Math.cos(line.orientation + Math.PI/2) * line.size / 2,
-            Math.sin(line.orientation + Math.PI/2) * line.size / 2);
+            Math.cos(line.orientation + Math.PI/2) * line.size / 2 + line.position,
+            Math.sin(line.orientation + Math.PI/2) * line.size / 2 + line.position);
         end2 = new THREE.Vector2(
             Math.cos(line.orientation - Math.PI/2) * line.size / 2,
             Math.sin(line.orientation - Math.PI/2) * line.size / 2);
-         
-        console.log("end1 : x = " + end1.x + ", y = " + end1.y);
-        console.log("end2 : x = " + end2.x + ", y = " + end2.y);
         
         if(c.distanceTo(pos) > line.size + L)
         {
             return false;   
         }
-        console.log("distance = " + c.distanceTo(pos)+ ", L + r = " + (L + line.size));
          
-        var vertices = new Array();
-        var intersect;
-        
-        vertices.push(new THREE.Vector2(
-            L * Math.cos(Math.PI / 4 + self.rotation) + self.position.x,
-            L * Math.sin(Math.PI / 4 + self.rotation) + self.position.y));
-        
-        vertices.push(new THREE.Vector2(
-            L * Math.cos(Math.PI * 3 / 4 + self.rotation) + self.position.x,
-            L * Math.sin(Math.PI * 3 / 4 + self.rotation) + self.position.y));
-        
-        vertices.push(new THREE.Vector2(
-            L * Math.cos(Math.PI * 5 / 4 + self.rotation) + self.position.x,
-            L * Math.sin(Math.PI * 5 / 4 + self.rotation) + self.position.y));
-        
-        vertices.push(new THREE.Vector2(
-            L * Math.cos(Math.PI * 7 / 4 + self.rotation) + self.position.x,
-            L * Math.sin(Math.PI * 7 / 4 + self.rotation) + self.position.y));
-       
-        console.log("end1 : x = " + end1.x + ", y = " + end1.y);
-        console.log("end2 : x = " + end2.x + ", y = " + end2.y);
-        for(var i = 0; i < vertices.length; i++)
+        for(var i = 0; i < self.vertices.length; i++)
         {
-            v1 = vertices[i];
+            v1 = self.vertices[i];
 
-            if (!(i < vertices.length - 1))
-                v2 = vertices[0];
+            if (!(i < self.vertices.length - 1))
+                v2 = self.vertices[0];
             else
-                v2 = vertices[i+1]; 
-            
-            console.log("v1 : x = " + v1.x + ", y = " + v1.y);
-            console.log("v2 : x = " + v2.x + ", y = " + v2.y);
-            console.log("v1_v2 : x = " + (v2.x - v1.x) + ", y = " + (v2.y - v1.y));
-            console.log("norme v1_v2 = "    + (v2.x - v1.x) * (v2.x - v1.x) 
-                                            + (v2.y - v1.y) * (v2.y - v1.y));
-            console.log("------");
+                v2 = self.vertices[i+1]; 
             
             if(collisionSegmentSegment(v1, v2, end1, end2))
             {
                 return true;
             }
-            
-            /*
-            intersect = segmentIntersect(v1.x, v1.y,
-                                 v2.x, v2.y, 
-                                 pos.x, pos.y, 
-                                 c.x, c.y);
-            
-            if(intersect != null)
-            {
-                return true;    
-            }
-            */
-    
         }
-        console.log("------");
-        console.log("------");
         
         return false;
     }

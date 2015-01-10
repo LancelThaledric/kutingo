@@ -105,6 +105,11 @@ function KTarget(app, parentstate){
         self.disp_target.scale.set(self.size, self.size, self.size);  
     }
     
+    self.onDestroy = function()
+    {
+        self.app.scene.remove(self.disp_target);
+    }
+    
     self.containsPoint = function(point)
     {
         var L = self.size / (2 * Math.cos(Math.PI / 4));

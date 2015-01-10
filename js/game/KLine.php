@@ -83,6 +83,11 @@ function KLine(app, parentstate){
         //self.disp_line.material.linewidth = self.thickness;
     }
     
+    self.onDestroy = function()
+    {
+        self.app.scene.remove(self.disp_line);
+    }
+    
     // YEAH MAN !!! //////////////////////////////////////////////////////////////
     self.init();
 }

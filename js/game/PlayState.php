@@ -87,6 +87,9 @@ function PlayState(app){
         self.level = new KLevel(self.app, self);
         self.level.load();
         self.switchPattern();
+        
+        self.app.soundmanager.resetBgmusic();
+        self.app.soundmanager.playBgmusic();
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
@@ -98,6 +101,13 @@ function PlayState(app){
         for(var i = 0; i < self.targets.length; i++)
         {
             self.targets[i].handleEvents();
+        }
+        
+        if(self.app.eventHandler.spaceKey)
+        {
+            self.app.eventHandler.spaceKey = false;
+            self.hasToPop = true;
+            self.app.states.push(new TitleState(self.app));
         }
     }
     
@@ -122,6 +132,7 @@ function PlayState(app){
         self.checkTargetsCollisions();
         self.clearTargets();
         self.score.update();
+        self.app.soundmanager.update();
     }
     
     self.draw = function()
@@ -138,6 +149,19 @@ function PlayState(app){
     self.onDestroy = function()
     {
         // DESTROY ALL !!!!!
+        self.score.onDestroy();
+        
+        self.line.onDestroy();
+        self.bullets.onDestroy();
+        
+        for(var i = 0; i<self.targets.length ; ++i)
+        {
+            self.targets[i].onDestroy();
+        }
+        
+        
+        
+        self.app.soundmanager.pauseBgmusic();
     }
     
     self.switchPattern = function()

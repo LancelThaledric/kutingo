@@ -109,6 +109,10 @@ function KBullets(app, parentstate){
 
     }
     
+    self.onDestroy = function(){
+        self.app.scene.remove(self.particles);
+    }
+    
     self.addBullet = function(rad, off, speed)
     {
         //step 1 : find a position within the table where the bullet is free

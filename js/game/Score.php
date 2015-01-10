@@ -63,6 +63,11 @@ function Score(app, parentstate){
         
     }
     
+    self.onDestroy = function()
+    {
+        self.app.hud.removeChild(self.hudelem);
+    }
+    
     // YEAH MAN !!! //////////////////////////////////////////////////////////////
     self.init();
 }

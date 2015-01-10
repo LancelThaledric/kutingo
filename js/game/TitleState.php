@@ -105,6 +105,7 @@ function TitleState(app){
     {
         if(self.app.eventHandler.spaceKey)
         {
+            self.app.eventHandler.spaceKey = false;
             self.hasToPop = true;
             self.app.states.push(new PlayState(self.app));
         }

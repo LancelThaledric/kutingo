@@ -16,6 +16,7 @@ require_once('EventHandler.php');
 require_once('TitleState.php');
 require_once('PlayState.php');
 require_once('Score.php');
+require_once('Audio.php');
 ?>
 
 
@@ -42,6 +43,9 @@ function Kutingo(){
     
     self.clock;
     self.deltaTime;
+    
+    self.soundmanager;
+    
     
     // CONSTRUCTOR  ///////////////////////////////////////////////////////////////
     
@@ -98,6 +102,9 @@ function Kutingo(){
         // Stating Game on the Title Screen
         //self.states.push(new PlayState(self));
         self.states.push(new TitleState(self));
+        
+        //music
+        self.soundmanager = new SoundManager(self);
         
         // Launch Render Loop
         self.render();

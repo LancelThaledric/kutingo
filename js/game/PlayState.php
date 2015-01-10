@@ -76,6 +76,8 @@ function PlayState(app){
         self.bpm = 60. / 140.;      //beat-time in seconds
         self.tap = 0;
         
+        self.score = new Score(self.app, self);
+        
         self.pattern = new KPattern(self.app, self);
         self.patternlist = [];
         self.level = new KLevel(self.app, self);
@@ -114,6 +116,7 @@ function PlayState(app){
         self.checkBarCollisions();
         self.checkTargetsCollisions();
         self.clearTargets();
+        self.score.update();
     }
     
     self.draw = function()
@@ -124,6 +127,7 @@ function PlayState(app){
         {
             self.targets[i].draw();
         }
+        self.score.draw();
     }
     
     self.onDestroy = function()

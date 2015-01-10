@@ -15,7 +15,7 @@ require_once('Math.php');
 require_once('EventHandler.php');
 require_once('TitleState.php');
 require_once('PlayState.php');
-
+require_once('Score.php');
 ?>
 
 

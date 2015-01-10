@@ -65,7 +65,7 @@ function KTarget(app, parentstate){
         }
         
         self.geometry = new THREE.BoxGeometry( 1, 1, 1);
-        self.material = new THREE.MeshBasicMaterial( {color: 0x000000} );
+        self.material = new THREE.MeshBasicMaterial( {color: 0x2244dd} );
         
         self.disp_target = new THREE.Mesh(self.geometry, self.material); 
         self.app.scene.add(self.disp_target);

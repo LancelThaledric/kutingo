@@ -90,7 +90,6 @@ function PlayState(app){
             self.switchPattern();
         }
         
-        
         self.line.update();
         self.bullets.update();
         for(var i = 0; i < self.targets.length; i++)
@@ -100,7 +99,7 @@ function PlayState(app){
         
         self.checkBarCollisions();
         self.checkTargetsCollisions();
-        // Reflection of bullets on the bar
+        self.clearTargets();
     }
     
     self.draw = function()
@@ -159,8 +158,7 @@ function PlayState(app){
                 continue;
             }
             
-            
-                        
+                    
             // Step 3 : Check the distance between the bullet and the center
             if (self.bullets.positions[i] * self.bullets.positions[i]
                + self.bullets.positions[i+1] * self.bullets.positions[i+1]
@@ -196,18 +194,18 @@ function PlayState(app){
         
     self.checkTargetsCollisions = function()
     {
-        var spliced;
         for(var i = 0; i < self.targets.length; i++)
         {
             if(self.targets[i].intersectBar(self.line))
             {
                 // The target has been hit by a bullet.
                 console.log("GAME OVER ?");
+                console.log("position : x = " + self.targets[i].position.x + ", y = " + self.targets[i].position.y); 
+                console.log("orientation = " + self.line.orientation); 
+                self.targets[i].isHit = true;
             }
             
-            spliced = false;
-            for(var js3 = 0; js3 < self.bullets.positions.length && !spliced;
-                js3 += 3)
+            for(var js3 = 0; js3 < self.bullets.positions.length; js3 += 3)
             {
                 var p = new THREE.Vector2(
                                     self.bullets.positions[js3],
@@ -219,10 +217,9 @@ function PlayState(app){
                 {
                     // The target has been hit by a bullet.
                     console.log("Target " + i + " hit !");
-                    self.targets.splice(i, 1);
-                    spliced = true;
+                    self.targets[i].isHit = true;
                 }
-            }
+            }    
         }
     }
     
@@ -242,6 +239,18 @@ function PlayState(app){
         targ.size = size;
         
         self.targets.push(targ);
+    }
+    
+    self.clearTargets = function()
+    {
+        for(var i = 0; i < self.targets.length; i++)
+        {
+            if(self.targets[i].isHit)
+            {
+                self.app.scene.remove(self.targets[i].disp_target);
+                self.targets.splice(i, 1);
+            }
+        }
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

@@ -91,3 +91,29 @@ function Pattern_TargetDiagFan(pat)
     }
     return pat;
 }
+
+function Pattern_TargetSoloRight(pat)
+{
+    pat.duration = 16;
+    pat.data = new Array(pat.duration * pat.patternDivider);
+    
+    pat.data[0] = new KPatternElement();
+    pat.data[0].targets.push(
+        new KTargetSpawner(pat.app, pat.parentstate, 
+                           0, Math.random() * 40-20, 0.4, 10)
+        );
+    return pat;
+}
+
+function Pattern_TargetSoloRandom(pat)
+{
+    pat.duration = 16;
+    pat.data = new Array(pat.duration * pat.patternDivider);
+    
+    pat.data[0] = new KPatternElement();
+    pat.data[0].targets.push(
+        new KTargetSpawner(pat.app, pat.parentstate, 
+                           Math.random()*Math.PI * 2, Math.random() * 40-20, 0.4, 10)
+        );
+    return pat;
+}

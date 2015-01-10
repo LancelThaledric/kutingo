@@ -65,6 +65,7 @@ function KLine(app, parentstate){
         {
             self.orientation -= self.speed * app.deltaTime;
         }
+        self.orientation %= Math.PI; 
     }
     
     self.update = function()

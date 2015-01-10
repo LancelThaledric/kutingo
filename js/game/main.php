@@ -48,7 +48,7 @@ function Kutingo(){
     {
         // Gui attributes
         self.aspectRatio = 16./9.;
-        self.clearColor = 0x550000;
+        self.clearColor = 0x000000;
         self.focus = false;
         
         // Scene vars
@@ -84,7 +84,8 @@ function Kutingo(){
         self.clock = new THREE.Clock(true);
         
         // Stating Game on the Title Screen
-        self.states.push(new PlayState(self));
+        //self.states.push(new PlayState(self));
+        self.states.push(new TitleState(self));
         
         // Launch Render Loop
         self.render();
@@ -101,6 +102,11 @@ function Kutingo(){
     {
         for(i=0 ; i<self.states.length ; i++)
         {
+            if(self.states[i].hasToPop)
+            {
+                self.states[i].onDestroy();
+                self.states.splice(i, 1);
+            }
             self.states[i].update();
         }
     }

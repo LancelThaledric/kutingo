@@ -22,6 +22,8 @@ function PlayState(app){
 
     self.app;
     
+    self.hasToPop = false;
+    
     self.line;
     
     self.bullets;
@@ -45,6 +47,17 @@ function PlayState(app){
     self.init = function(){
         
         self.app = app;
+        
+        self.app.camera = new THREE.OrthographicCamera(
+            -self.app.aspectRatio*100,      // Left
+            self.app.aspectRatio*100,       // Right
+            100,                      // Top
+            -100,                     // Bottom
+            1,                      // znear
+            1000                    // zfar
+        );
+        self.app.camera.position.z = 100;
+        
         
         self.line = new KLine(self.app, self);
         
@@ -111,6 +124,11 @@ function PlayState(app){
         {
             self.targets[i].draw();
         }
+    }
+    
+    self.onDestroy = function()
+    {
+        // DESTROY ALL !!!!!
     }
     
     self.switchPattern = function()

@@ -196,7 +196,7 @@ function PlayState(app){
         
     self.checkTargetsCollisions = function()
     {
-        var spliced;
+        /*var spliced;
         for(var i = 0; i < self.targets.length; i++)
         {
             if(self.targets[i].intersectBar(self.line))
@@ -214,7 +214,7 @@ function PlayState(app){
                                     self.bullets.positions[js3 + 1]);
                 /*console.log("i = " + i + ", j = " + js3 / 3);
                 console.log("i = " + i + " : target = " + self.targets[i] 
-                            + ", length = " + self.targets.length);*/
+                            + ", length = " + self.targets.length);//
                 if(self.targets[i].containsPoint(p))
                 {
                     // The target has been hit by a bullet.
@@ -223,7 +223,26 @@ function PlayState(app){
                     spliced = true;
                 }
             }
+        }*/
+
+        for(var i = 0; i < self.targets.length; i++)
+        {
+            //Step 1 : We compute a Circle-Line Collision To prevent 99% of cases
+            var A = [];
+            A[0] = Math.cos(self.line.orientation + Math.PI/2) * self.line.size;
+            A[1] = Math.sin(self.line.orientation + Math.PI/2) * self.line.size;
+            
+            if(!CollisionCircleSegment(A,
+                                    [-A[0], -A[1]],     // B is -A
+                                    [self.targets[i].position.x,
+                                     self.targets[i].position.y],
+                                    self.targets[i].size/2 * Math.SQRT2))
+                continue;
+            
+            console.log("MaybeColide");
         }
+
+
     }
     
     self.addTarget = function(rad, off, speed, size)

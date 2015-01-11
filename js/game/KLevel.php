@@ -25,7 +25,7 @@ function KLevel(app, parentstate){
         
         // Temporry : Base level information
         self.linewidth = 40;
-        self.bpm = 60./140.;
+        self.bpm = 60./ 140.;
         
         
     }

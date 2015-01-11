@@ -32,7 +32,7 @@ function KLine(app, parentstate){
         self.size = 20;
         //self.orientation = Math.PI / 3;
         self.orientation = 0;
-        self.speed = 5.2;
+        self.speed = 1.0;
         self.color = 0xFFFFFF;
         self.thickness = 4;
         
@@ -58,12 +58,12 @@ function KLine(app, parentstate){
     {
         if(app.eventHandler.leftKey)
         {
-            self.orientation += self.speed * self.app.deltaTime * self.parentstate.bpm;
+            self.orientation += self.speed * self.app.deltaTime / self.parentstate.bpm;
         }
         
         if(app.eventHandler.rightKey)
         {
-            self.orientation -= self.speed * self.app.deltaTime * self.parentstate.bpm;
+            self.orientation -= self.speed * self.app.deltaTime / self.parentstate.bpm;
         }
         //self.orientation %= Math.PI; 
     }

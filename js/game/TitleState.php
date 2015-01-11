@@ -200,6 +200,7 @@ function TitleState(app){
         self.app.scene.remove(self.sphere);
         self.app.scene.remove(self.TitlePlane);
         self.app.scene.remove(self.StartPlane);
+        self.app.soundmanager.sfx_jingle.stop();
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

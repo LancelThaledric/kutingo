@@ -75,7 +75,7 @@ function PlayState(app){
             self.targets[i] = new KTarget(self.app, self);
         }*/
         
-        self.bpm = 60. / 140.;      //beat-time in seconds
+        //self.bpm = 60. / 1.;      //beat-time in seconds //The KLevel init it !
         self.tap = 0;
         self.starttime = self.app.clock.elapsedTime;
         self.elapsed = 0;

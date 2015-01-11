@@ -183,7 +183,7 @@ function TitleState(app){
         self.TitleImg.opacity = Math.min(1, Math.pow(self.time/2, 10));
         self.TitleImg.needsUpdate = true;
         
-        self.StartImg.opacity = Math.min(1, Math.pow(self.time/2-1, 10));
+        self.StartImg.opacity = Math.min(1, Math.pow(Math.max(0, self.time-1)/2, 10));
         self.StartImg.needsUpdate = true;
 
         self.attributes.size.needsUpdate = true;

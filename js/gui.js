@@ -96,5 +96,25 @@ function() {
         app.onResize();
     });
     
+    
+    function fetchLeaderboard()
+    {
+        var container = $('#leaderboard_wrapper');
+        var request = $.ajax({
+                              url: "ajax/leaderboard.php?n=10",
+                              type: "POST",
+                              dataType: "html"
+                            })
+          .done(function(content) {
+            container.html(content);
+          })
+          .fail(function() {
+            container.html('Failed to load Leaderboard.');
+          });
+    }
+    fetchLeaderboard();
+    
+    $('#refresh_leaderboard').click(fetchLeaderboard);
+    
 }
 );

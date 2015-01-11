@@ -8,6 +8,15 @@ body{
     
     background: #000;
     color: #ddd;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+h1, h2{
+    font-family: 'Geostar Fill', cursive;
+}
+h2{
+    font-size : 32px;
 }
 
 /*--------------------------------
@@ -232,6 +241,14 @@ body{
     color : #41dae9;
 }
 
+.tablestream{
+    display: table;
+    width : 100%;
+    margin-bottom: 24px;
+}
+.tablestream>*{
+    display: table-cell;
+}
 
 /*--------------------------------
         COLUMNS
@@ -264,6 +281,18 @@ body{
         HUD
 --------------------------------*/
 
+.HUDscore{
+    font-family: 'Geostar Fill', cursive;
+}
+
+.HUDbigscore{
+    font-size : 200px;
+    text-shadow : #fff 0px 0px 20px, #fff 0px 0px 50px;
+    padding-top : 64px;
+    line-height : 200px;
+    height : 40%;
+}
+
 #inputPseudo{
     display : block;
     margin : 20px auto;
@@ -275,4 +304,56 @@ body{
     background: rgba(0,0,0,0.7);
     border : solid 4px #111;
     color : #ea8014;
+}
+
+
+/*--------------------------------
+        LEADERBOARD
+--------------------------------*/
+
+.leaderboards h2{
+    width : 90%;
+}
+
+#refresh_leaderboard{
+    text-align: right;
+    color : #ea8014;
+    background: #000;
+    border : none;
+    cursor : pointer;
+}
+#refresh_leaderboard:hover{
+    color : #000;
+    background : #41dae9;
+}
+#refresh_leaderboard:active{
+    background : #ea8014;
+}
+
+#leaderboard_wrapper ul{
+    list-style-type: none;
+    margin : 0;
+    padding : 0;
+}
+#leaderboard_wrapper>ul>li{
+    margin : 0;
+    padding : 0;
+}
+#leaderboard_wrapper>ul>li>ul{
+    font-size : 32px;
+    line-height: 48px;
+    padding : 8px;
+    clear: both;
+    font-family: 'Geostar Fill', cursive;
+}
+#leaderboard_wrapper>ul>li>ul>li:first-child{
+    color : #ea8014;
+    float : left;
+}
+#leaderboard_wrapper>ul>li>ul>li:last-child{
+    color : #41dae9;
+    text-align : right;
+}
+#leaderboard_wrapper>ul>li:nth-child(2n+1){
+    background: #111;
 }

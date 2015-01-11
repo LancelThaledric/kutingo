@@ -35,10 +35,11 @@ function Score(app, parentstate){
         self.update();
         
         self.hudelem = document.createElement('div');
+        $(self.hudelem).addClass('HUDscore');
         self.app.hud.appendChild(self.hudelem);
         
         $(self.hudelem).css({
-            'font' : '40px monospace bold',
+            'font-size' : '40px',
             'text-shadow' : '#fff 0px 0px 5px, #fff 0px 0px 10px'
         });
         

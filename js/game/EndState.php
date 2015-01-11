@@ -29,12 +29,7 @@ function EndState(app){
         
         self.hudscore = document.createElement('div');
         self.app.hud.appendChild(self.hudscore);
-        
-        $(self.hudscore).css({
-            'font' : '200px monospace bold',
-            'text-shadow' : '#fff 0px 0px 20px, #fff 0px 0px 50px',
-            'margin' : '48px'
-        });
+        $(self.hudscore).addClass('HUDscore').addClass('HUDbigscore');
         
         self.hudpseudo = document.createElement('input');
         $(self.hudpseudo).attr('id','inputPseudo');

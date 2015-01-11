@@ -251,6 +251,9 @@ function PlayState(app){
             // Final : We change the direction of the bullet
             self.bullets.speeds[is3] *= 2;
             self.bullets.hasBounced[is3] = true;
+            self.bullets.colors[i] = 0xEA / 0xff;
+            self.bullets.colors[i+1] = 0x80 /0xff;
+            self.bullets.colors[i+2] = 0x14 /0xff;
             
         }
     }

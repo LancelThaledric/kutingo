@@ -17,6 +17,7 @@ function KBullets(app, parentstate){
     
     self.positions;
     self.positionstm1;
+    self.colors;
     self.directions;
     self.speeds;
     self.hasBounced;
@@ -42,6 +43,7 @@ function KBullets(app, parentstate){
         var geombuf = new THREE.BufferGeometry();
         self.positions = new Float32Array(self.nb*3);
         self.positionstm1 = new Float32Array(self.nb*3);     // pos at t-1
+        self.colors = new Float32Array(self.nb*3);
         self.directions = [];
         self.speeds = [];
         self.hasBounced = [];
@@ -72,10 +74,17 @@ function KBullets(app, parentstate){
             self.exists[is3] = false;
         }
         
+        var texture = THREE.ImageUtils.loadTexture( "img/spark2.png" );
+        
         var material = new THREE.PointCloudMaterial(
-            {size:4, sizeAttenuation:false}
+            {size:16,
+             sizeAttenuation:false,
+             map:texture,
+             transparent:true,
+             vertexColors: THREE.VertexColors
+            }
         );
-        material.color.set(0x00FFFF);
+        material.color.set(0xFFFFFF);
         
         self.particles = new THREE.PointCloud(geombuf, material);
         self.particles.sortParticles = true;
@@ -102,6 +111,7 @@ function KBullets(app, parentstate){
         }
         self.clearbullets();
         self.particles.geometry.addAttribute( 'position', new THREE.BufferAttribute( self.positions, 3 ) );
+        self.particles.geometry.addAttribute( 'color', new THREE.BufferAttribute( self.colors, 3 ) );
     }
     
     self.draw = function()
@@ -126,6 +136,10 @@ function KBullets(app, parentstate){
         self.positions[i*3] = Math.cos(rad) * self.dist;
         self.positions[i*3+1] = Math.sin(rad) * self.dist;
         self.positions[i*3+2] = 0;
+        
+        self.colors[i*3] = 0x41 / 0xff;
+        self.colors[i*3+1] = 0xDA /0xff;
+        self.colors[i*3+2] = 0xE9 /0xff;
 
         self.directions[i] = -rad;
         self.speeds[i] = speed;

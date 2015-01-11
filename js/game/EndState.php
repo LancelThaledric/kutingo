@@ -39,7 +39,19 @@ function EndState(app){
         self.hudpseudo = document.createElement('input');
         $(self.hudpseudo).attr('id','inputPseudo');
         $(self.hudpseudo).attr('placeholder','Your name here');
-        $(self.hudpseudo).val(self.app.pseudo);
+        
+        
+        if(self.app.pseudo != '')
+        {
+            $(self.hudpseudo).val(self.app.pseudo);
+        }
+        else
+        {
+        var cookiepseudo = self.readCookie('pseudo');
+        if(cookiepseudo != null)
+            $(self.hudpseudo).val(cookiepseudo);
+        }
+        
         self.app.hud.appendChild(self.hudpseudo);
         
     }
@@ -74,8 +86,33 @@ function EndState(app){
     {
         self.app.pseudo = $(self.hudpseudo).val().trim();
         
+        if(self.app.pseudo != '')
+            self.createCookie('pseudo', self.app.pseudo, 365);
+        
         self.app.hud.removeChild(self.hudscore);
         self.app.hud.removeChild(self.hudpseudo);
+    }
+    
+    
+    self.createCookie = function(name,value,days) {
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime()+(days*24*60*60*1000));
+            var expires = "; expires="+date.toGMTString();
+        }
+        else var expires = "";
+        document.cookie = name+"="+value+expires+"; path=/";
+    }
+
+    self.readCookie = function(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

@@ -24,7 +24,7 @@ function KLevel(app, parentstate){
         self.parentstate = parentstate;
         
         // Temporry : Base level information
-        self.linewidth = 40;
+        self.linewidth = 20;
         self.bpm = 60./ 140.;
         
         
@@ -38,14 +38,20 @@ function KLevel(app, parentstate){
         self.parentstate.bpm = self.bpm;
         self.parentstate.patternlist = 
         [
-            //new Pattern_CrossBullet(),
-            //new Pattern_CrossBulletDiag(),
-            //new Pattern_LeftBulletRafale(),
-            //new Pattern_RightBulletRafale(),
+            new Pattern_CrossBullet(),
+            new Pattern_CrossBulletDiag(),
+            new Pattern_RandomLittleBulletRafale(),
+            new Pattern_RandomTwoSidedBulletRafale(),
             //new Pattern_BulletFan(),
-            //new Pattern_TargetDiagFan()
+            new Pattern_RandomBulletShrapnel(),
+            
+            new Pattern_RandomTargetRafale(),
+            new Pattern_RandomTwoSidedTargetRafale(),
+            new Pattern_RandomTwoSidedLittleRapidTargetRafale(),
             new Pattern_TargetSoloRandom(),
-            new Pattern_SoloBulletLeft()
+            new Pattern_TargetSoloRandom(),
+            new Pattern_TargetSoloRandom(),
+            new Pattern_TargetSoloRandom()
         ];
     }
     

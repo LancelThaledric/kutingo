@@ -53,7 +53,7 @@ function SoundManager(app){
             url:'sound/KutBreak.mp3',
             autoLoad:true
         });
-        soundManager.setVolume('sfx_bonus',90);
+        soundManager.setVolume('sfx_bonus',20);
         
         self.sfx_gameover = soundManager.createSound({
             id:'sfx_gameover',

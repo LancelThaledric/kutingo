@@ -249,7 +249,7 @@ function PlayState(app){
             
             
             // Final : We change the direction of the bullet
-            self.bullets.speeds[is3] = 4;
+            self.bullets.speeds[is3] *= 2;
             self.bullets.hasBounced[is3] = true;
             
         }
@@ -293,12 +293,14 @@ function PlayState(app){
             // Bullet Collision
             for(var j=0, js3 = 0; j < self.bullets.positions.length; j += 3, js3++)
             {
-                if(!self.bullets.exists[j] || !self.bullets.hasBounced[j])
+                
+                if(!self.bullets.exists[js3] || !self.bullets.hasBounced[js3])
                     continue;
                     
                 
                 var p1 = [self.bullets.positions[j], self.bullets.positions[j+1]];
                 var p2 = [self.bullets.positionstm1[j], self.bullets.positionstm1[j+1]];
+                var c1, c2, c3, c4, t1, t2;
                 
                 //console.log("T : " + p1);
                 //console.log("T-1 : " + p2);
@@ -308,10 +310,52 @@ function PlayState(app){
                                            self.targets[i].position.y],
                                           self.targets[i].size/2*Math.SQRT2))
                 {
-                    // The target has been hit by a bullet.
-                    //console.log("Target " + i + " hit !");
-                    self.targets[i].isHit = true;
-                    self.app.soundmanager.sfx_bonus.play();
+                    t1 = new THREE.Vector2(p1[0], p1[1]);
+                    t2 = new THREE.Vector2(p2[0], p2[1]);
+                    
+                    c1 = new THREE.Vector2(
+                        self.targets[i].position.x + Math.cos(Math.PI/4 + self.targets[i].rotation) * (self.targets[i].size/2),
+                        self.targets[i].position.x + Math.sin(Math.PI/4 + self.targets[i].rotation) * (self.targets[i].size/2)
+                    );
+                    
+                    c2 = new THREE.Vector2(
+                        self.targets[i].position.x + Math.cos(3*Math.PI/4 + self.targets[i].rotation) * (self.targets[i].size/2),
+                        self.targets[i].position.x + Math.sin(3*Math.PI/4 + self.targets[i].rotation) * (self.targets[i].size/2)
+                    );
+                    
+                    c3 = new THREE.Vector2(
+                        self.targets[i].position.x + Math.cos(5*Math.PI/4 + self.targets[i].rotation) * (self.targets[i].size/2),
+                        self.targets[i].position.x + Math.sin(5*Math.PI/4 + self.targets[i].rotation) * (self.targets[i].size/2)
+                    );
+                        
+                    c4 = new THREE.Vector2(
+                        self.targets[i].position.x + Math.cos(7*Math.PI/4 + self.targets[i].rotation) * (self.targets[i].size/2),
+                        self.targets[i].position.x + Math.sin(7*Math.PI/4 + self.targets[i].rotation) * (self.targets[i].size/2)
+                    );
+                    
+                    if((
+                          collisionSegmentSegment(t1, t2, c1, c2)
+                       || collisionSegmentSegment(t1, t2, c2, c3)
+                       || collisionSegmentSegment(t1, t2, c3, c4)
+                       || collisionSegmentSegment(t1, t2, c4, c1)
+                       )
+                       || CollisionCircleSegment(p1, p2,
+                                          [self.targets[i].position.x,
+                                           self.targets[i].position.y],
+                                          self.targets[i].size/2)
+                      )
+                       
+                    {
+                    
+                        // The target has been hit by a bullet.
+                        //console.log("Target " + i + " hit !");
+                        self.targets[i].isHit = true;
+                        self.app.soundmanager.sfx_bonus.play();
+                        self.score.bonusscore += 10;
+                        self.bullets.exists[js3] = false;
+                        self.bullets.positions[j] = -1000;
+                        self.bullets.positions[j+1] = -1000;
+                    }
                 }
                 
                 
@@ -338,12 +382,15 @@ function PlayState(app){
                                     [-A[0], -A[1]],     // B is -A
                                     [self.targets[i].position.x,
                                      self.targets[i].position.y],
-                                    self.targets[i].size/2 * Math.SQRT2))
+                                    self.targets[i].size/2))
                 continue;
+            
             
             //console.log("MaybeColide");
             
             self.gameover();
+            return;
+
             
         }
         

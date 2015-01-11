@@ -39,7 +39,7 @@ function KTarget(app, parentstate){
         self.app = app;
         self.parentstate = parentstate;
         
-        self.dist = 70;
+        self.dist = 80;
         
         self.position = new THREE.Vector3(0, 0, 10);
         self.rotation = 0;

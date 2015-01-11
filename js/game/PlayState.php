@@ -93,6 +93,8 @@ function PlayState(app){
         self.app.soundmanager.resetBgmusic();
         self.app.soundmanager.playBgmusic();
         
+        $(window).blur(self.gameover);
+
         
         $(self.app).trigger('gameStarted');
         
@@ -169,6 +171,9 @@ function PlayState(app){
         
         self.app.soundmanager.pauseBgmusic();
         $(self.app).trigger('gamePaused');
+        
+        $(window).unbind('blur', self.gameover);
+        
     }
     
     self.switchPattern = function()
@@ -337,19 +342,24 @@ function PlayState(app){
                 continue;
             
             //console.log("MaybeColide");
-            self.app.soundmanager.sfx_gameover.play();
-            self.hasToPop = true;
             
-            var endstate = new EndState(self.app);
-            endstate.score = self.score.totalscore;
-            if(self.app.autosave) endstate.recordScore();
-            
-            self.app.states.push(endstate);
-            
+            self.gameover();
             
         }
         
 
+    }
+    
+    self.gameover = function()
+    {
+        self.app.soundmanager.sfx_gameover.play();
+        self.hasToPop = true;
+
+        var endstate = new EndState(self.app);
+        endstate.score = self.score.totalscore;
+        if(self.app.autosave) endstate.recordScore();
+
+        self.app.states.push(endstate);
     }
     
     self.addTarget = function(rad, off, speed, size)

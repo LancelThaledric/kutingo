@@ -18,6 +18,8 @@ function EndState(app){
     
     self.hudscore;
     self.hudpseudo;
+    self.hudtip;
+    self.saved;
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
@@ -26,15 +28,16 @@ function EndState(app){
         self.app = app;
         
         self.score = 0;
+        self.saved = false;
         
         self.hudscore = document.createElement('div');
         self.app.hud.appendChild(self.hudscore);
         $(self.hudscore).addClass('HUDscore').addClass('HUDbigscore');
         
         self.hudpseudo = document.createElement('input');
+        $(self.hudpseudo).attr('type','text');
         $(self.hudpseudo).attr('id','inputPseudo');
         $(self.hudpseudo).attr('placeholder','Your name here');
-        
         
         if(self.app.pseudo != '')
         {
@@ -48,6 +51,28 @@ function EndState(app){
         }
         
         self.app.hud.appendChild(self.hudpseudo);
+        
+        self.hudtip = document.createElement('div');
+        if(!self.app.autosave)
+            $(self.hudtip).html('Press Space or Enter to save your score and retry');
+        else
+            $(self.hudtip).html('Score saved. Press Space or Enter to retry.');
+        self.app.hud.appendChild(self.hudtip);
+        
+        self.hudtoogleautosave = document.createElement('input');
+        $(self.hudtoogleautosave).attr('type','checkbox');
+        $(self.hudtoogleautosave).attr('id','hudtoogleautosave');
+        if(self.app.autosave) $(self.hudtoogleautosave).attr('checked','checked');
+        self.app.hud.appendChild(self.hudtoogleautosave);
+        
+        self.hudtoogleautosavetip = document.createElement('label');
+        $(self.hudtoogleautosavetip).attr('for','hudtoogleautosave');
+        $(self.hudtoogleautosavetip).html('Auto-record your score');
+        self.app.hud.appendChild(self.hudtoogleautosavetip);
+        
+        $(self.hudtoogleautosave).on('click',
+            function(){self.app.autosave = !self.app.autosave;}
+        );
         
     }
     
@@ -84,8 +109,34 @@ function EndState(app){
         if(self.app.pseudo != '')
             self.createCookie('pseudo', self.app.pseudo, 365);
         
+        self.recordScore();
+        
         self.app.hud.removeChild(self.hudscore);
         self.app.hud.removeChild(self.hudpseudo);
+        self.app.hud.removeChild(self.hudtip);
+        self.app.hud.removeChild(self.hudtoogleautosave);
+        self.app.hud.removeChild(self.hudtoogleautosavetip);
+    }
+    
+    self.recordScore = function(){
+        if(self.saved) return;
+        
+        if(self.app.pseudo != ''){
+            $.ajax({
+                url: "ajax/record.php",
+                type: "POST",
+                dataType: "html",
+                data : 'pseudo='+self.app.pseudo+'&score='+self.score
+            })
+            .done(function(content) {
+                //Nothing
+            })
+            .fail(function() {
+                alert('Failed to record your score.');
+            });
+            
+            self.saved = true;
+        }
     }
     
     

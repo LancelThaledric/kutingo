@@ -50,6 +50,7 @@ function Kutingo(){
     
     self.paused;
     self.pseudo;
+    self.autosave;
     
     
     // CONSTRUCTOR  ///////////////////////////////////////////////////////////////
@@ -103,6 +104,7 @@ function Kutingo(){
         
         //Pseudo
         self.pseudo = "";
+        self.autosave = false;
         
         // States
         self.eventHandler = new EventHandler(self);

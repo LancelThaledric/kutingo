@@ -339,8 +339,11 @@ function PlayState(app){
             //console.log("MaybeColide");
             self.app.soundmanager.sfx_gameover.play();
             self.hasToPop = true;
+            
             var endstate = new EndState(self.app);
             endstate.score = self.score.totalscore;
+            if(self.app.autosave) endstate.recordScore();
+            
             self.app.states.push(endstate);
             
             

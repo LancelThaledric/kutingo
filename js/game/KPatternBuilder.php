@@ -133,3 +133,19 @@ var Pattern_TargetSoloRandom = function(){
         return pat;
     }
 }
+
+
+
+var Pattern_SoloBulletLeft = function(){
+    
+    this.setPattern = function(pat)
+    {
+        pat.duration = 2;
+        pat.data = new Array(pat.duration * pat.patternDivider);
+        pat.data[0] = new KPatternElement();
+        pat.data[0].bullets.push(
+            new KBulletSpawner(pat.app, pat.parentstate, Math.PI/2, 0, 1)
+        );
+        return pat;
+    }
+};

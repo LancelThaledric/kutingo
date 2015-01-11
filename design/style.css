@@ -32,7 +32,7 @@ body{
     width : 100%;
     height: 64px;
     
-    background: rgba(255,0,0,0.5);
+    background: #000;
     
     /* Transistions */
     -webkit-transition: top 0.5s ease;
@@ -74,7 +74,7 @@ body{
     height: 100vh;
     margin-top : 100vh;
     
-    background: blue;
+    background: #000;
     
     /* Transistions */
     -webkit-transition: margin 0.5s ease;
@@ -100,33 +100,6 @@ body{
     visibility: hidden;
 }
 
-.scroll-indicator{
-    position: absolute;
-    bottom : -64px;
-    z-index : 150;
-    width: 100%;
-    height: 64px;
-    
-    background: rgba(0,255,255,0.5);
-    
-    /* Transistions */
-    -webkit-transition: margin 0.5s ease, bottom 0.5s ease;
-       -moz-transition: margin 0.5s ease, bottom 0.5s ease;
-        -ms-transition: margin 0.5s ease, bottom 0.5s ease;
-         -o-transition: margin 0.5s ease, bottom 0.5s ease;
-            transition: margin 0.5s ease, bottom 0.5s ease;
-}
-.scroll-indicator.slideDown-done{
-    visibility: hidden;
-}
-.main-wrapper.hasmenus .scroll-indicator{
-    bottom : 0px;
-}
-.main-wrapper.outspread .scroll-indicator{
-    margin-bottom : -64px;
-    bottom : 100vh;
-}
-
 /*--------------------------------
         MAIN MENU ITEMS
 --------------------------------*/
@@ -148,10 +121,12 @@ body{
     padding : 8px;
     
     font-size : 20px;
+    color : #41dae9;
 }
 
 .main-menu ul>li>a:hover{
-    background: rgba(255,255,0,0.5);
+    background: #ea8014;
+    color : #000;
 }
 
 /*--------------------------------
@@ -191,4 +166,94 @@ body{
     display: inline-block;
     margin : auto;
     vertical-align: middle;
+}
+
+/*--------------------------------
+        SCROLL INDICATOR
+--------------------------------*/
+
+.scroll-indicator{
+    position: absolute;
+    bottom : -64px;
+    z-index : 150;
+    width: 100%;
+    height: 64px;
+    
+    background: rgba(0,0,0,0.7);
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
+    
+    /* Transistions */
+    -webkit-transition: margin 0.5s ease, bottom 0.5s ease;
+       -moz-transition: margin 0.5s ease, bottom 0.5s ease;
+        -ms-transition: margin 0.5s ease, bottom 0.5s ease;
+         -o-transition: margin 0.5s ease, bottom 0.5s ease;
+            transition: margin 0.5s ease, bottom 0.5s ease;
+}
+.scroll-indicator.slideDown-done{
+    visibility: hidden;
+}
+.main-wrapper.hasmenus .scroll-indicator{
+    bottom : 0px;
+}
+.main-wrapper.outspread .scroll-indicator{
+    margin-bottom : -64px;
+    bottom : 100vh;
+}
+
+.downarrow{
+    width : 0; height : 0;
+    border : solid transparent 48px;
+    border-bottom : none;
+    border-top-color: #000;
+    margin : auto;
+    
+}
+
+.uparrow{
+    width : 0; height : 0;
+    border : solid transparent 48px;
+    border-top : none;
+    border-bottom-color: #ea8014;
+    margin : auto;
+    
+}
+
+.orange{
+    color : #ea8014;
+}
+.blue{
+    color : #41dae9;
+}
+
+
+/*--------------------------------
+        COLUMNS
+--------------------------------*/
+
+.columnwrapper{
+    clear : both;
+}
+
+.columncenter{
+    padding : 40px;
+    overflow : auto;
+}
+
+.columnleft{
+    width : 33.3%;
+    float : left;
+    padding : 40px;
+}
+
+.columnright{
+    width : 33.3%;
+    float : right;
+    padding : 40px;
 }

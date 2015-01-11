@@ -23,11 +23,14 @@ function() {
     var outspread_timeout;
     var animationDone_class = 'slideDown-done'
     var hasmenus_class = 'hasmenus';
+    var game = $('.game');
     
     
     function hideOverlap(){
         scrollIndicator.removeClass(animationDone_class);
         clearTimeout(outspread_timeout);
+        game.css('display', 'block');
+        app.resume();
         outspread_timeout = setTimeout(
             function(){
                 undergame.addClass(animationDone_class);
@@ -46,6 +49,8 @@ function() {
         outspread_timeout = setTimeout(
             function(){
                 scrollIndicator.addClass(animationDone_class);
+                game.css('display', 'none');
+                app.pause();
             }
             , outspread_duration
         );

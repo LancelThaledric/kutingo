@@ -286,24 +286,40 @@ function PlayState(app){
         {
             
             // Bullet Collision
-            for(var js3 = 0; js3 < self.bullets.positions.length; js3 += 3)
+            for(var j=0, js3 = 0; j < self.bullets.positions.length; j += 3, js3++)
             {
-                if(!self.bullets.exists[js3] || !self.bullets.hasBounced[js3])
+                if(!self.bullets.exists[j] || !self.bullets.hasBounced[j])
                     continue;
                     
-                var p = new THREE.Vector2(
-                                    self.bullets.positions[js3],
-                                    self.bullets.positions[js3 + 1]);
-                /*console.log("i = " + i + ", j = " + js3 / 3);
-                console.log("i = " + i + " : target = " + self.targets[i] 
-                            + ", length = " + self.targets.length);*/
-                if(self.targets[i].containsPoint(p))
+                
+                var p1 = [self.bullets.positions[j], self.bullets.positions[j+1]];
+                var p2 = [self.bullets.positionstm1[j], self.bullets.positionstm1[j+1]];
+                
+                console.log("T : " + p1);
+                console.log("T-1 : " + p2);
+                
+                if(CollisionCircleSegment(p1, p2,
+                                          [self.targets[i].position.x,
+                                           self.targets[i].position.y],
+                                          self.targets[i].size/2*Math.SQRT2))
                 {
                     // The target has been hit by a bullet.
                     //console.log("Target " + i + " hit !");
                     self.targets[i].isHit = true;
                     self.app.soundmanager.sfx_bonus.play();
                 }
+                
+                
+                /*var p = new THREE.Vector2(
+                                    self.bullets.positions[js3],
+                                    self.bullets.positions[js3 + 1]);
+                if(self.targets[i].containsPoint(p))
+                {
+                    // The target has been hit by a bullet.
+                    //console.log("Target " + i + " hit !");
+                    self.targets[i].isHit = true;
+                    self.app.soundmanager.sfx_bonus.play();
+                }*/
             }    
             
             
@@ -323,7 +339,9 @@ function PlayState(app){
             //console.log("MaybeColide");
             self.app.soundmanager.sfx_gameover.play();
             self.hasToPop = true;
-            self.app.states.push(new TitleState(self.app));
+            var endstate = new EndState(self.app);
+            endstate.score = self.score.totalscore;
+            self.app.states.push(endstate);
             
             
         }

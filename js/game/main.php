@@ -15,6 +15,7 @@ require_once('Math.php');
 require_once('EventHandler.php');
 require_once('TitleState.php');
 require_once('PlayState.php');
+require_once('EndState.php');
 require_once('Score.php');
 require_once('Audio.php');
 ?>
@@ -46,6 +47,8 @@ function Kutingo(){
     
     self.soundmanager;
     self.jinglePlayed;
+    
+    self.paused;
     
     
     // CONSTRUCTOR  ///////////////////////////////////////////////////////////////
@@ -187,6 +190,15 @@ function Kutingo(){
         self.renderer.setSize( w, h);
     }
     
+    self.pause = function(){
+        self.paused = true;
+    }
+    
+    self.resume = function(){
+        self.paused = false;
+        self.render();
+    }
+    
     /*
     render
     Three.js method for drawing scene
@@ -196,7 +208,8 @@ function Kutingo(){
         self.deltaTime = self.clock.getDelta();
         self.handleEvents();
         self.update();
-        requestAnimationFrame( self.render );
+        if(!self.paused)
+            requestAnimationFrame( self.render );
         self.renderer.clear();
         self.draw();
         self.renderer.render( self.scene, self.camera );

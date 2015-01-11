@@ -24,8 +24,6 @@ function() {
     var animationDone_class = 'slideDown-done'
     var hasmenus_class = 'hasmenus';
     
-    var o = true;
-    
     
     function hideOverlap(){
         scrollIndicator.removeClass(animationDone_class);
@@ -74,12 +72,17 @@ function() {
     }
     );
     
-    $('.game').click(
+    $(app).bind('gameStarted',
     function(){
-        app.focus = !app.focus;
-        o = !o;
-        if(o) mainWrapper.addClass(hasmenus_class);
-        else mainWrapper.removeClass(hasmenus_class);
+        app.focus = true;
+        mainWrapper.removeClass(hasmenus_class);
+    }
+    );
+    
+    $(app).bind('gamePaused',
+    function(){
+        app.focus = false;
+        mainWrapper.addClass(hasmenus_class);
     }
     );
     

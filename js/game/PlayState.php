@@ -88,8 +88,14 @@ function PlayState(app){
         self.level.load();
         self.switchPattern();
         
+        
+        
         self.app.soundmanager.resetBgmusic();
         self.app.soundmanager.playBgmusic();
+        
+        
+        $(self.app).trigger('gameStarted');
+        
     }
     
     // Methods     ///////////////////////////////////////////////////////////////
@@ -162,6 +168,7 @@ function PlayState(app){
         
         
         self.app.soundmanager.pauseBgmusic();
+        $(self.app).trigger('gamePaused');
     }
     
     self.switchPattern = function()

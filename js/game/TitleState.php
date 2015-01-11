@@ -73,7 +73,7 @@ function TitleState(app){
         self.app.camera.position.z = 300;
         
         
-        for ( var i = 0; i < 100000; i ++ ) {
+        for ( var i = 0; i < 20000; i ++ ) {
 
             var vertex = new THREE.Vector3();
             vertex.x = Math.random() * 2 - 1;
@@ -175,7 +175,7 @@ function TitleState(app){
 
         for( var i = 0; i < self.attributes.size.value.length; i++ ) {
 
-            self.attributes.size.value[ i ] = 14 + 13 * Math.sin( 0.1 * i + time );
+            self.attributes.size.value[ i ] = (14 + 13 * Math.sin( 0.1 * i + time ))*4;
 
 
         }

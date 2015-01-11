@@ -110,6 +110,7 @@ function Kutingo(){
     
     self.launch = function()
     {
+        
         // Clock Launch
         self.clock = new THREE.Clock(true);
         

@@ -14,6 +14,7 @@ function EventHandler(app){
     self.leftKey;
     self.rightKey;
     self.spaceKey;
+    self.enterKey;
     
     // Constructor  ///////////////////////////////////////////////////////////////
     
@@ -22,6 +23,7 @@ function EventHandler(app){
         self.leftKey = false;
         self.rightKey = false;
         self.spaceKey = false;
+        self.enterKey = false;
         
         $(window).keydown(self.onKeyDown);
         $(window).keyup(self.onKeyUp);
@@ -42,6 +44,9 @@ function EventHandler(app){
             case 32:    // SPACE
                 self.spaceKey = true;
                 break;
+            case 13:    // ENTER
+                self.enterKey = true;
+                break;
         }
     }
     
@@ -57,6 +62,9 @@ function EventHandler(app){
                 break;
             case 32:    // SPACE
                 self.spaceKey = false;
+                break;
+            case 13:    // ENTER
+                self.enterKey = false;
                 break;
         }
     }

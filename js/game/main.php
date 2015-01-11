@@ -49,6 +49,7 @@ function Kutingo(){
     self.jinglePlayed;
     
     self.paused;
+    self.pseudo;
     
     
     // CONSTRUCTOR  ///////////////////////////////////////////////////////////////
@@ -99,6 +100,9 @@ function Kutingo(){
         //music
         self.soundmanager = new SoundManager(self);
         self.jinglePlayed = false;
+        
+        //Pseudo
+        self.pseudo = "";
         
         // States
         self.eventHandler = new EventHandler(self);

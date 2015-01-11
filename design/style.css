@@ -257,3 +257,22 @@ body{
     float : right;
     padding : 40px;
 }
+
+
+
+/*--------------------------------
+        HUD
+--------------------------------*/
+
+#inputPseudo{
+    display : block;
+    margin : 20px auto;
+    width : 20%;
+    min-width: 200px;
+    height : 40px;
+    font-size : 30px;
+    text-align: center;
+    background: rgba(0,0,0,0.7);
+    border : solid 4px #111;
+    color : #ea8014;
+}

@@ -16,6 +16,9 @@ function EndState(app){
     
     self.score;
     
+    self.hudscore;
+    self.hudpseudo;
+    
     // Constructor  ///////////////////////////////////////////////////////////////
     
     self.init = function(){
@@ -24,13 +27,20 @@ function EndState(app){
         
         self.score = 0;
         
-        self.hudelem = document.createElement('div');
-        self.app.hud.appendChild(self.hudelem);
+        self.hudscore = document.createElement('div');
+        self.app.hud.appendChild(self.hudscore);
         
-        $(self.hudelem).css({
+        $(self.hudscore).css({
             'font' : '200px monospace bold',
-            'text-shadow' : '#fff 0px 0px 20px, #fff 0px 0px 50px'
+            'text-shadow' : '#fff 0px 0px 20px, #fff 0px 0px 50px',
+            'margin' : '48px'
         });
+        
+        self.hudpseudo = document.createElement('input');
+        $(self.hudpseudo).attr('id','inputPseudo');
+        $(self.hudpseudo).attr('placeholder','Your name here');
+        $(self.hudpseudo).val(self.app.pseudo);
+        self.app.hud.appendChild(self.hudpseudo);
         
     }
     
@@ -38,9 +48,13 @@ function EndState(app){
     
     self.handleEvents = function()
     {
-        if(self.app.eventHandler.spaceKey)
+        if(self.app.eventHandler.spaceKey || self.app.eventHandler.enterKey)
         {
+            if($(self.hudpseudo).is(':focus') && self.app.eventHandler.spaceKey)
+                return;
+            
             self.app.eventHandler.spaceKey = false;
+            self.app.eventHandler.enterKey = false;
             self.hasToPop = true;
             self.app.states.push(new PlayState(self.app));
         }
@@ -53,12 +67,15 @@ function EndState(app){
     
     self.draw = function()
     {
-        self.hudelem.innerText = self.score;
+        self.hudscore.innerText = self.score;
     }
     
     self.onDestroy = function()
     {
-        self.app.hud.removeChild(self.hudelem);
+        self.app.pseudo = $(self.hudpseudo).val().trim();
+        
+        self.app.hud.removeChild(self.hudscore);
+        self.app.hud.removeChild(self.hudpseudo);
     }
     
     // YEAH MAN !!! //////////////////////////////////////////////////////////////

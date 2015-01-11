@@ -33,7 +33,7 @@ echo '<ul>';
 
 while ($donnees = $reponse->fetch())
 {
-	echo '<li><ul><li>'.utf8_encode($donnees['pseudo']) . '</li><li>'.$donnees['score'].'</li></ul></li>';
+	echo '<li><ul><li>'.$donnees['pseudo'] . '</li><li>'.$donnees['score'].'</li></ul></li>';
 }
 
 echo '</ul>';

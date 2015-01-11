@@ -31,11 +31,12 @@ function EndState(app){
         self.saved = false;
         
         self.hudscore = document.createElement('div');
-        self.app.hud.appendChild(self.hudscore);
         $(self.hudscore).addClass('HUDscore').addClass('HUDbigscore');
+        self.app.hud.appendChild(self.hudscore);
         
         self.hudpseudo = document.createElement('input');
         $(self.hudpseudo).attr('type','text');
+        $(self.hudpseudo).attr('maxlength','16');
         $(self.hudpseudo).attr('id','inputPseudo');
         $(self.hudpseudo).attr('placeholder','Your name here');
         
@@ -99,7 +100,7 @@ function EndState(app){
     
     self.draw = function()
     {
-        self.hudscore.innerText = self.score;
+        self.hudscore.textContent = self.score;
     }
     
     self.onDestroy = function()

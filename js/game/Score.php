@@ -60,7 +60,7 @@ function Score(app, parentstate){
     
     self.draw = function(){
         // Fill with gradient
-        self.hudelem.innerText = self.totalscore;
+        self.hudelem.textContent = self.totalscore;
         
     }
     

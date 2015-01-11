@@ -25,6 +25,8 @@ function() {
     var hasmenus_class = 'hasmenus';
     var game = $('.game');
     
+    var is_fullscreen = false;
+    
     
     function hideOverlap(){
         scrollIndicator.removeClass(animationDone_class);
@@ -40,6 +42,9 @@ function() {
         
         
         mainWrapper.removeClass(outspread_class);
+        
+        $('#menu_play').addClass('toggled');
+        $('#menu_overlap').removeClass('toggled');
     }
     
     function showOverlap(){
@@ -54,6 +59,9 @@ function() {
             }
             , outspread_duration
         );
+        
+        $('#menu_play').removeClass('toggled');
+        $('#menu_overlap').addClass('toggled');
     }
     
     // Events Overlap
@@ -115,6 +123,45 @@ function() {
     fetchLeaderboard();
     
     $('#refresh_leaderboard').click(fetchLeaderboard);
+    
+    $('#menu_play').click(hideOverlap);
+    $('#menu_overlap').click(showOverlap);
+    
+    
+    
+    
+    function toggleFullScreen() {
+        
+        if(!is_fullscreen)
+        {
+            var docElm = document.documentElement;
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            }
+            else if (docElm.mozRequestFullScreen) {
+                docElm.mozRequestFullScreen();
+            }
+            else if (docElm.webkitRequestFullScreen) {
+                docElm.webkitRequestFullScreen();
+            }
+        }
+        else
+        {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+            else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            }
+            else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+        }
+        is_fullscreen = !is_fullscreen;
+        
+        $('#menu_fullscreen').toggleClass('toggled');
+    }
+    $('#menu_fullscreen').click(toggleFullScreen);
     
 }
 );

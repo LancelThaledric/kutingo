@@ -295,8 +295,8 @@ function PlayState(app){
                 var p1 = [self.bullets.positions[j], self.bullets.positions[j+1]];
                 var p2 = [self.bullets.positionstm1[j], self.bullets.positionstm1[j+1]];
                 
-                console.log("T : " + p1);
-                console.log("T-1 : " + p2);
+                //console.log("T : " + p1);
+                //console.log("T-1 : " + p2);
                 
                 if(CollisionCircleSegment(p1, p2,
                                           [self.targets[i].position.x,

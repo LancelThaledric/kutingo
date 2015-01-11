@@ -24,7 +24,7 @@ catch(Exception $e)
 }
 
 $query = $bdd->prepare('INSERT INTO leaderboard(pseudo, score) VALUES (:pseudo, :score)');
-$query->bindValue(':pseudo', $pseudo);
+$query->bindValue(':pseudo', substr($pseudo,0,16));
 $query->bindValue(':score', $score);
 $query->execute();
 

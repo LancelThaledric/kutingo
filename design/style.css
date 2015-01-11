@@ -17,6 +17,7 @@ h1, h2{
 }
 h2{
     font-size : 32px;
+    margin : 32px 0;
 }
 
 /*--------------------------------
@@ -131,11 +132,16 @@ h2{
     
     font-size : 20px;
     color : #41dae9;
+    cursor : pointer;
 }
 
-.main-menu ul>li>a:hover{
+.main-menu ul>li>a:hover, .main-menu ul>li>a.toggled:hover{
     background: #ea8014;
     color : #000;
+}
+
+.main-menu ul>li>a.toggled{
+    background: #444;
 }
 
 /*--------------------------------
@@ -244,7 +250,7 @@ h2{
 .tablestream{
     display: table;
     width : 100%;
-    margin-bottom: 24px;
+    margin : 32px 0;
 }
 .tablestream>*{
     display: table-cell;
@@ -260,7 +266,7 @@ h2{
 
 .columncenter{
     padding : 40px;
-    overflow : auto;
+    overflow : hidden;
 }
 
 .columnleft{
@@ -349,11 +355,70 @@ h2{
 #leaderboard_wrapper>ul>li>ul>li:first-child{
     color : #ea8014;
     float : left;
+    word-wrap: break-word;
 }
 #leaderboard_wrapper>ul>li>ul>li:last-child{
     color : #41dae9;
     text-align : right;
+    word-wrap: break-word;
 }
 #leaderboard_wrapper>ul>li:nth-child(2n+1){
     background: #111;
 }
+
+
+
+
+/*--------------------------------
+        MEDIA QUERIES
+--------------------------------*/
+
+@media(max-height:640px){
+    
+    .HUDbigscore{
+        font-size : 60px;
+        padding-top : 64px;
+        line-height : 60px;
+        height : 40%;
+    }
+    
+}
+
+@media(max-width:1600px){
+    
+    #leaderboard_wrapper>ul>li>ul{
+        font-size : 24px;
+        line-height: 32px;
+        padding : 6px;
+    }
+    
+}
+
+@media(max-width:1300px){
+    
+    .columnleft{
+        width : 40%;
+    }
+    
+    .columnright{
+        float : left;
+        clear : left;
+        width : 40%;
+    }
+    
+}
+
+@media(max-width:800px){
+    
+    .columnleft{
+        float : none;
+        width : auto;
+    }
+    
+    .columnright{
+        float : none;
+        width : auto;
+    }
+    
+}
+
